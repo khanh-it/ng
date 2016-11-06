@@ -1,0 +1,28 @@
+<!-- toolbar -->
+<div class="toolbar">
+  <div class="tb-left">
+    <a routerLink="">
+      <span>Home</span> <i class="tb-icon"></i>
+    </a>
+  </div>
+  <div class="tb-center">
+    <h3>Todo List</h3>
+  </div>
+  <div class="tb-right">
+    <a routerLink="">
+      <span>New</span> <i class="tb-icon"></i>
+    </a>
+  </div>
+</div>
+<!-- .end#toolbar -->
+
+<!-- list of todo -->
+<div class="page-content">
+  <ul class="todo-list" *ngIf="_tasks">
+    <li *ngFor="let task of getSortedTasks()">
+      <span>{{task.id}}: {{task.name}}</span>
+      <i class="btn-del"></i>
+    </li>
+  </ul>
+</div>
+<!-- .end#list of todo -->
