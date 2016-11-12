@@ -1,10 +1,10 @@
-import { NgModule }       from '@angular/core';
+import { NgModule, OpaqueToken }       from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
 import { FormsModule }    from '@angular/forms';
 import { RouterModule }   from '@angular/router';
 
 // Configs
-//import { app_configs }    from '../../configs';
+import { AppConfigInterface, app_configs, APP_CONFIG } from '../../configs';
 
 // Components
 import { AppComponent }       from '../../components/app/index';
@@ -27,7 +27,19 @@ import { Task_RepoService }   from '../../services/repos/task';
     // Services
     // .end#Services
   ],
-  providers: [ Task_RepoService, IndexedDBService ],
+  providers: [
+    // Application configs
+    {provide: APP_CONFIG, useValue: app_configs},
+
+    // .end#Application configs
+    Task_RepoService, IndexedDBService,
+
+    AppModule
+  ],
   bootstrap:    [ AppComponent ]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() {
+
+  }
+}

@@ -12,7 +12,7 @@ var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
 // Configs
-//import { app_configs }    from '../../configs';
+var configs_1 = require("../../configs");
 // Components
 var index_1 = require("../../components/app/index");
 var index_2 = require("../../components/todo-list/index");
@@ -35,7 +35,13 @@ AppModule = __decorate([
             // Components
             index_1.AppComponent, index_2.TodoListComponent,
         ],
-        providers: [task_1.Task_RepoService, indexed_db_1.IndexedDBService],
+        providers: [
+            // Application configs
+            { provide: configs_1.APP_CONFIG, useValue: configs_1.app_configs },
+            // .end#Application configs
+            task_1.Task_RepoService, indexed_db_1.IndexedDBService,
+            AppModule
+        ],
         bootstrap: [index_1.AppComponent]
     }),
     __metadata("design:paramtypes", [])
