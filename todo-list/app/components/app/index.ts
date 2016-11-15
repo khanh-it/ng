@@ -12,12 +12,7 @@ import { AppModule } from '../../modules/app/index';
   templateUrl: 'tmpl.html'
 })
 export class AppComponent implements OnInit {
-  constructor(/* protected _appModule: AppModule, */@Inject(APP_CONFIG) protected _appConfigs: AppConfigInterface) {
-    console.log('window: ', window);
-  }
+  constructor() {}
 
-  ngOnInit() {
-    console.log('module: ', module);
-    console.log('_appConfigs: ', this._appConfigs);
-  }
+  ngOnInit() {}
 }

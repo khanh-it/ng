@@ -16,10 +16,13 @@ var configs_1 = require("../../configs");
 // Components
 var index_1 = require("../../components/app/index");
 var index_2 = require("../../components/todo-list/index");
+var index_3 = require("../../components/todo-create/index");
+var index_4 = require("../../components/todo-edit/index");
+var index_5 = require("../../components/todo-detail/index");
 // Routing
 var routing_1 = require("./routing");
 // Services
-var indexed_db_1 = require("../../services/indexed-db");
+var pouchdb_1 = require("../../services/pouchdb");
 // +++ Repo(s)
 var task_1 = require("../../services/repos/task");
 var AppModule = (function () {
@@ -33,13 +36,17 @@ AppModule = __decorate([
         exports: [],
         declarations: [
             // Components
-            index_1.AppComponent, index_2.TodoListComponent,
+            index_1.AppComponent,
+            index_2.TodoListComponent,
+            index_3.TodoCreateComponent,
+            index_4.TodoEditComponent,
+            index_5.TodoDetailComponent,
         ],
         providers: [
             // Application configs
             { provide: configs_1.APP_CONFIG, useValue: configs_1.app_configs },
             // .end#Application configs
-            task_1.Task_RepoService, indexed_db_1.IndexedDBService,
+            task_1.Task_RepoService, pouchdb_1.PouchDBService,
             AppModule
         ],
         bootstrap: [index_1.AppComponent]

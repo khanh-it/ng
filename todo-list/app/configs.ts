@@ -4,7 +4,9 @@ import { OpaqueToken } from '@angular/core';
  *
  */
 export interface AppConfigInterface {
-  db: Object
+  db: {
+    name:string
+  }
 }
 /**
  *

@@ -9,19 +9,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var AppComponent = (function () {
-    function AppComponent() {
+// Services
+var task_1 = require("../../services/repos/task");
+var TodoDetailComponent = (function () {
+    /**/
+    function TodoDetailComponent(_repoTask) {
+        this._repoTask = _repoTask;
     }
-    AppComponent.prototype.ngOnInit = function () { };
-    return AppComponent;
+    /**/
+    TodoDetailComponent.prototype.ngOnInit = function () { };
+    return TodoDetailComponent;
 }());
-AppComponent = __decorate([
+TodoDetailComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
-        selector: 'App',
-        templateUrl: 'tmpl.html'
+        selector: 'TodoDetail',
+        templateUrl: 'tmpl.html',
+        styleUrls: ['styles.css']
     }),
-    __metadata("design:paramtypes", [])
-], AppComponent);
-exports.AppComponent = AppComponent;
+    __metadata("design:paramtypes", [task_1.Task_RepoService])
+], TodoDetailComponent);
+exports.TodoDetailComponent = TodoDetailComponent;
 //# sourceMappingURL=index.js.map

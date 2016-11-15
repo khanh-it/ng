@@ -6,11 +6,11 @@ var TaskModel = (function () {
     /**
      *
      */
-    function TaskModel(id, name, priority) {
-        if (id === void 0) { id = ''; }
+    function TaskModel(_id, name, priority) {
+        if (_id === void 0) { _id = ''; }
         if (name === void 0) { name = ''; }
         if (priority === void 0) { priority = 0; }
-        this.id = id;
+        this._id = _id;
         this.name = name;
         this.priority = priority;
     }

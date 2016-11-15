@@ -10,58 +10,49 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 // Services
-var indexed_db_1 = require("../indexed-db");
+var pouchdb_1 = require("../pouchdb");
 var Task_RepoService = (function () {
     /***/
-    function Task_RepoService() {
+    function Task_RepoService(_PouchDBService) {
+        this._PouchDBService = _PouchDBService;
         /**
          *
          */
-        this.DBName = 'todo-list.ng';
-        /**
-         *
-         */
-        this.DBOptions = {
-            version: 1
-        };
-        /**
-         *
-         */
-        this._tasks = [
-            { id: '1', name: 'Task 01', priority: 0 },
-            { id: '2', name: 'Task 02', priority: 0 },
-            { id: '3', name: 'Task 03', priority: 0 },
-            { id: '4', name: 'Task 04', priority: 0 },
-            { id: '5', name: 'Task 05', priority: 0 },
-            { id: '6', name: 'Task 06', priority: 0 },
-            { id: '7', name: 'Task 07', priority: 0 },
-            { id: '8', name: 'Task 08', priority: 0 },
-            { id: '9', name: 'Task 09', priority: 0 },
-            { id: '10', name: 'Task 10', priority: 0 },
+        this._defTasks = [
+            { _id: '001_1', name: 'Task 01', priority: 0 },
+            { _id: '001_2', name: 'Task 02', priority: 0 },
+            { _id: '001_3', name: 'Task 03', priority: 0 },
+            { _id: '001_4', name: 'Task 04', priority: 0 },
+            { _id: '001_5', name: 'Task 05', priority: 0 },
+            { _id: '001_6', name: 'Task 06', priority: 0 },
+            { _id: '001_7', name: 'Task 07', priority: 0 },
+            { _id: '001_8', name: 'Task 08', priority: 0 },
+            { _id: '001_9', name: 'Task 09', priority: 0 },
+            { _id: '001_10', name: 'Task 10', priority: 0 },
         ];
+        /**
+         *
+         */
+        this._tasks = [];
+        //console.log('_PouchDBService: ', this._PouchDBService);
     }
-    Task_RepoService.prototype.getDB = function () {
-        var _this = this;
-        if (this._db) {
-            return Promise.resolve(this._db);
-        }
-        return indexed_db_1.IndexedDBService
-            .getDB(this.DBName, this.DBOptions)
-            .then(function (db) {
-            console.log('getDB', db);
-            _this._db = db;
-            // Create an objectStore for this database
-            var objectStore = db.createObjectStore("task", { keyPath: "id" });
-            console.log('objectStore: ', objectStore);
-        });
-    };
     /***/
     Task_RepoService.prototype.getTasks = function () {
         var _this = this;
-        return this.getDB()
-            .then(function (db) {
-            console.log("Get tasks done!");
-            return _this._tasks;
+        var db = this._PouchDBService.getDB();
+        return db.allDocs({
+            'include_docs': true,
+            'key': '001_1'
+        })
+            .then(function (docs) {
+            console.log('docs: ', docs);
+            /*if (!docs.total_rows) {
+            /*    this._defTasks.forEach((task, idx) => {
+                  docs.rows.push(task);
+                  db.put(task);
+                });
+            }*/
+            return docs.rows;
         })
             .catch(function (err) {
             console.log("Get tasks failed!", err);
@@ -72,7 +63,7 @@ var Task_RepoService = (function () {
 }());
 Task_RepoService = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [pouchdb_1.PouchDBService])
 ], Task_RepoService);
 exports.Task_RepoService = Task_RepoService;
 //# sourceMappingURL=task.js.map

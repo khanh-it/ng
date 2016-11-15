@@ -1,7 +1,7 @@
-import { NgModule, OpaqueToken }       from '@angular/core';
-import { BrowserModule }  from '@angular/platform-browser';
-import { FormsModule }    from '@angular/forms';
-import { RouterModule }   from '@angular/router';
+import { NgModule, OpaqueToken }      from '@angular/core';
+import { BrowserModule }              from '@angular/platform-browser';
+import { FormsModule }                from '@angular/forms';
+import { RouterModule }               from '@angular/router';
 
 // Configs
 import { AppConfigInterface, app_configs, APP_CONFIG } from '../../configs';
@@ -9,10 +9,13 @@ import { AppConfigInterface, app_configs, APP_CONFIG } from '../../configs';
 // Components
 import { AppComponent }       from '../../components/app/index';
 import { TodoListComponent }  from '../../components/todo-list/index';
+import { TodoCreateComponent }  from '../../components/todo-create/index';
+import { TodoEditComponent }  from '../../components/todo-edit/index';
+import { TodoDetailComponent }  from '../../components/todo-detail/index';
 // Routing
 import { AppRoutingModule }   from './routing';
 // Services
-import { IndexedDBService }   from '../../services/indexed-db';
+import { PouchDBService }   from '../../services/pouchdb';
 // +++ Repo(s)
 import { Task_RepoService }   from '../../services/repos/task';
 
@@ -21,7 +24,11 @@ import { Task_RepoService }   from '../../services/repos/task';
   exports:      [  ],
   declarations: [
     // Components
-    AppComponent, TodoListComponent,
+    AppComponent,
+    TodoListComponent,
+    TodoCreateComponent,
+    TodoEditComponent,
+    TodoDetailComponent,
     // .end#Components
 
     // Services
@@ -32,7 +39,7 @@ import { Task_RepoService }   from '../../services/repos/task';
     {provide: APP_CONFIG, useValue: app_configs},
 
     // .end#Application configs
-    Task_RepoService, IndexedDBService,
+    Task_RepoService, PouchDBService,
 
     AppModule
   ],
