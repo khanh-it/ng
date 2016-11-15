@@ -4,6 +4,11 @@
  */
 (function (global) {
   System.config({
+    meta: {
+      'node_modules/pouchdb*': {
+        format: 'global'
+      }
+    },
     paths: {
       // paths serve as alias
       'npm:': 'node_modules/'
