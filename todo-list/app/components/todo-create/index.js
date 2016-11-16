@@ -16,20 +16,51 @@ var TodoCreateComponent = (function () {
     function TodoCreateComponent(_repoTask) {
         this._repoTask = _repoTask;
         /** */
-        this.powers = ['Really Smart', 'Super Flexible', 'Super Hot', 'Weather Changer'];
+        this._dfTask = {
+            '_id': '', 'name': '', 'note': '', 'priority': 0
+        };
+        /** */
+        this.priorities = ['Lowest', 'Low', 'Normal', 'High', 'Highest'];
+        /** */
+        this.formHidden = false;
         /** */
         this.submitted = false;
     }
-    /** */
-    TodoCreateComponent.prototype.onSubmit = function () { this.submitted = true; };
-    Object.defineProperty(TodoCreateComponent.prototype, "diagnostic", {
-        // TODO: Remove this when we're done
-        get: function () { return JSON.stringify(this.task); },
-        enumerable: true,
-        configurable: true
-    });
+    // TODO: Remove this when we're done
+    TodoCreateComponent.prototype.diagnostic = function (task) {
+        if (undefined === task) {
+            return JSON.stringify((undefined === task) ? this.task : task);
+        }
+        console.log('diagnostic: ', task);
+        return '';
+    };
+    TodoCreateComponent.prototype._mkDefaultTask = function () {
+        //
+        this.task = JSON.parse(JSON.stringify(this._dfTask));
+    };
     /**/
     TodoCreateComponent.prototype.ngOnInit = function () {
+        //
+        this._mkDefaultTask();
+        //
+        var time = 1024;
+        setInterval(function () {
+        }, time);
+    };
+    /**/
+    TodoCreateComponent.prototype.onKBEvts = function (eleDOM) {
+        //console.log('eleDOM: ', eleDOM);
+        //this.task.name = (<HTMLInputElement>$event.target).value;
+    };
+    /**/
+    TodoCreateComponent.prototype.onSubmit = function () {
+        var _this = this;
+        this._mkDefaultTask();
+        this.submitted = true;
+        setTimeout(function () { return _this.submitted = false; }, 0);
+        console.log('arguments: ', arguments);
+        console.log('-- end ');
+        return false;
     };
     return TodoCreateComponent;
 }());

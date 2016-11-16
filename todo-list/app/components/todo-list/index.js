@@ -21,20 +21,20 @@ var TodoListComponent = (function () {
     /**/
     TodoListComponent.prototype.ngOnInit = function () {
         var _this = this;
-        console.log('ngOnInit');
+        //console.log('ngOnInit');
         this._repoTask.getTasks()
             .then(function (tasks) {
-            console.log('[TodoListComponent] Get tasks done!');
+            //console.log('[TodoListComponent] Get tasks done!');
             _this._tasks = tasks;
         })
             .catch(function (err) {
-            console.log('[TodoListComponent] Get tasks failed!');
+            //console.log('[TodoListComponent] Get tasks failed!');
             _this._tasks = [];
         });
     };
     /***/
     TodoListComponent.prototype.getSortedTasks = function () {
-        console.log('[TodoListComponent][getSortedTasks]!');
+        //console.log('[TodoListComponent][getSortedTasks]!');
         return this._tasks;
     };
     return TodoListComponent;

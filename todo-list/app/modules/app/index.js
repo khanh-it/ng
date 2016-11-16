@@ -25,6 +25,8 @@ var routing_1 = require("./routing");
 var pouchdb_1 = require("../../services/pouchdb");
 // +++ Repo(s)
 var task_1 = require("../../services/repos/task");
+// Pipes
+var keys_1 = require("../../pipes/keys");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -41,6 +43,9 @@ AppModule = __decorate([
             index_3.TodoCreateComponent,
             index_4.TodoEditComponent,
             index_5.TodoDetailComponent,
+            // .end#Components
+            // Pipes
+            keys_1.KeysPipe,
         ],
         providers: [
             // Application configs

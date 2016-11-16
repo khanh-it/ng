@@ -16,21 +16,37 @@
 
 <div class="page-content">
   <!-- form -->
-  <form class="clearfix">
+  <form method="POST" class="clearfix" [hidden]="formHidden" *ngIf="!submitted" #frmTask="ngForm" #frmEle (ngSubmit)="onSubmit(frmTask, frmEle)">
+    <!--<p>Form dump: {{diagnostic(_$form)}}</p>-->
+    <!--<p>FormNG dump: {{diagnostic(_$formNG)}}</p>-->
     <div class="form-group">
-      <label for="name">Name</label>
-      <input type="text" class="form-control" id="name" required>
+      <label for="task-name">Name</label>
+      <!--<input type="text" class="form-control" id="task-name" required (keyup)="onKBEvts($event)">
+      <div *ngIf="task">
+        <br/><span>{{task.name}}</span>
+      </div>
+      <input type="text" class="form-control" id="task-name" required #_$box (keyup)="onKBEvts(_$box)">
+      <p>{{_$box.value}}</p>-->
+      <input type="text" class="form-control" id="task-name" required [(ngModel)]="task.name" name="task[name]" #taskNameNGM="ngModel">
+      <div [hidden]="taskNameNGM.valid || taskNameNGM.pristine"  class="alert alert-danger">Name is required!</div>
     </div>
     <div class="form-group">
-      <label for="alterEgo">Alter Ego</label>
-      <input type="text" class="form-control" id="alterEgo">
-    </div>
-    <div class="form-group">
-      <label for="power">Hero Power</label>
-      <select class="form-control" id="power" required>
-        <option *ngFor="let p of powers" [value]="p">{{p}}</option>
+      <label for="task-priority">Priority</label>
+      <select class="form-control" id="task-priority" required [(ngModel)]="task.priority" name="task[priority]">
+        <option *ngFor="let pName of priorities; let pVal = index;" [value]="pVal">{{pName}}</option>
       </select>
     </div>
+    <div class="form-group">
+      <label for="task-note">Note</label>
+      <textarea class="form-control" id="task-note" [(ngModel)]="task.note" name="task[note]"></textarea>
+    </div>
+    <!--<div class="form-group">
+      <label for="power-obj">Hero Power (obj)</label>
+      <select class="form-control" id="power-obj" required>
+        <option *ngFor="let p of objPowers|keys" [value]="p.value">Key: {{p.key}} / Value: {{p.value}}</option>
+      </select>
+    </div>-->
+    <!--<p>Task dump: {{diagnostic()}}</p>-->
     <button type="submit" class="btn btn-default">Submit</button>
   </form>
 </div>

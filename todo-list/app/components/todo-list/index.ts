@@ -21,14 +21,14 @@ export class TodoListComponent implements OnInit {
 
   /**/
   ngOnInit(): void {
-    console.log('ngOnInit');
+    //console.log('ngOnInit');
     this._repoTask.getTasks()
       .then((tasks) => {
-        console.log('[TodoListComponent] Get tasks done!');
+        //console.log('[TodoListComponent] Get tasks done!');
         this._tasks = tasks;
       })
       .catch(err => {
-        console.log('[TodoListComponent] Get tasks failed!');
+        //console.log('[TodoListComponent] Get tasks failed!');
         this._tasks = [];
       })
     ;
@@ -36,7 +36,7 @@ export class TodoListComponent implements OnInit {
 
   /***/
   public getSortedTasks():TaskModel[] {
-    console.log('[TodoListComponent][getSortedTasks]!');
+    //console.log('[TodoListComponent][getSortedTasks]!');
     return this._tasks;
   }
 }

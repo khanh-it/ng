@@ -18,6 +18,8 @@ import { AppRoutingModule }   from './routing';
 import { PouchDBService }   from '../../services/pouchdb';
 // +++ Repo(s)
 import { Task_RepoService }   from '../../services/repos/task';
+// Pipes
+import { KeysPipe }       from '../../pipes/keys';
 
 @NgModule({
   imports:      [ BrowserModule, FormsModule, AppRoutingModule ],
@@ -30,6 +32,10 @@ import { Task_RepoService }   from '../../services/repos/task';
     TodoEditComponent,
     TodoDetailComponent,
     // .end#Components
+
+    // Pipes
+    KeysPipe,
+    // .end#Pipes
 
     // Services
     // .end#Services

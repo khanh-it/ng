@@ -13,25 +13,67 @@ import { Task_RepoService }    from '../../services/repos/task';
   styleUrls: ['styles.css']
 })
 export class TodoCreateComponent implements OnInit {
+
+  /** */
+  protected _dfTask: TaskModel = {
+    '_id': '', 'name': '', 'note': '', 'priority': 0
+  };
+
   /** */
   public task: TaskModel;
 
   /** */
-  public powers = ['Really Smart', 'Super Flexible', 'Super Hot', 'Weather Changer'];
+  public priorities = ['Lowest', 'Low', 'Normal', 'High', 'Highest'];
 
   /** */
-  public submitted = false;
-
-  /** */
-  public onSubmit() { this.submitted = true; }
+  public formHidden = false;
 
   // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.task); }
+  public diagnostic(task) {
+    if (undefined === task) {
+      return JSON.stringify((undefined === task) ? this.task : task)  ;
+    }
+    console.log('diagnostic: ', task);
+    return '';
+  }
 
   /**/
   public constructor(protected _repoTask: Task_RepoService) {}
 
+  protected _mkDefaultTask() {
+    //
+    this.task = JSON.parse(JSON.stringify(this._dfTask));
+  }
+
   /**/
   ngOnInit(): void {
+    //
+    this._mkDefaultTask();
+    //
+    let time = 1024;
+    setInterval(() => {
+
+    }, time);
+  }
+
+  /**/
+  public onKBEvts(eleDOM:any) {
+    //console.log('eleDOM: ', eleDOM);
+    //this.task.name = (<HTMLInputElement>$event.target).value;
+  }
+
+  /** */
+  public submitted = false;
+
+  /**/
+  public onSubmit() {
+    this._mkDefaultTask();
+    this.submitted = true;
+    setTimeout(() => this.submitted = false, 0);
+
+    console.log('arguments: ', arguments);
+    console.log('-- end ');
+
+    return false;
   }
 }
