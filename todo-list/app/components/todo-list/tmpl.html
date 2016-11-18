@@ -20,7 +20,9 @@
 <div class="page-content">
   <ul class="todo-list" *ngIf="_tasks">
     <li *ngFor="let task of getSortedTasks()">
-      <span>{{task.id}}: {{task.name}}</span>
+      <span>{{task.id}}: {{task.doc.name}}</span><br>
+      <span>{{task.doc.note}}</span><br>
+      <span>{{task.doc.priority}}</span>
       <i class="btn-del"></i>
     </li>
   </ul>

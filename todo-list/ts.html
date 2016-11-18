@@ -1,22 +1,19 @@
 <html>
   <head>
-    <title>PouchDB</title>
+    <title>Learn TS</title>
     <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 1. Load libraries -->
-    <script src="node_modules/pouchdb/dist/pouchdb.js"></script>
-    <script src="node_modules/pouchdb/dist/pouchdb.memory.js"></script>
     <script src="node_modules/systemjs/dist/system.src.js"></script>
     <!-- 2. Configure SystemJS -->
     <script src="systemjs.config.js"></script>
-    <script src="pouchdb.js"></script>
     <script>
       //window.require = System.amdRequire;
       //window.define = System.amdDefine;
-      //System.import('pouchdb.js').catch(function(err){
-        //console.error(err);
-      //});
+      System.import('ts.js').catch(function(err){
+        console.error(err);
+      });
     </script>
   </head>
   <!-- 3. Display the application -->

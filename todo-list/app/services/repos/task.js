@@ -42,7 +42,6 @@ var Task_RepoService = (function () {
         var db = this._PouchDBService.getDB();
         return db.allDocs({
             'include_docs': true,
-            'key': '001_1'
         })
             .then(function (docs) {
             console.log('docs: ', docs);
@@ -58,6 +57,11 @@ var Task_RepoService = (function () {
             console.log("Get tasks failed!", err);
             return _this._tasks;
         });
+    };
+    Task_RepoService.prototype.insert = function (task) {
+        //
+        task.genID();
+        return this._PouchDBService.getDB().put(task);
     };
     return Task_RepoService;
 }());

@@ -40,7 +40,7 @@ export class Task_RepoService {
     let db = this._PouchDBService.getDB();
     return db.allDocs({
         'include_docs': true,
-        'key': '001_1'
+        //'key': '001_1'
       })
       .then(docs => {
         console.log('docs: ', docs);
@@ -57,5 +57,11 @@ export class Task_RepoService {
         return this._tasks;
       })
     ;
+  }
+
+  public insert(task:TaskModel):Promise<Object> {
+    //
+    task.genID();
+    return this._PouchDBService.getDB().put(task);
   }
 }
