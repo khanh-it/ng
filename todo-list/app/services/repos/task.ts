@@ -43,7 +43,7 @@ export class Task_RepoService {
         //'key': '001_1'
       })
       .then(docs => {
-        console.log('docs: ', docs);
+        //console.log('docs: ', docs);
         /*if (!docs.total_rows) {
         /*    this._defTasks.forEach((task, idx) => {
               docs.rows.push(task);
@@ -63,5 +63,20 @@ export class Task_RepoService {
     //
     task.genID();
     return this._PouchDBService.getDB().put(task);
+  }
+
+  public getTask(id:string):Promise<TaskModel>|Promise<null> {
+    let db = this._PouchDBService.getDB();
+    return db.allDocs({
+        'include_docs': true, 'key': id
+      })
+      .then(docs => {
+        return docs.rows[0];
+      })
+      .catch((err) => {
+        console.log(`Get task failed!`, err);
+        return null;
+      })
+    ;
   }
 }

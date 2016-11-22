@@ -13,8 +13,8 @@ const routes: Routes = [
   { path: '',  component: TodoListComponent },
   { path: 'todo/list', component: TodoListComponent },
   { path: 'todo/create', component: TodoCreateComponent },
-  { path: 'todo/edit/id:id', component: TodoEditComponent },
-  { path: 'todo/detail/id:id', component: TodoDetailComponent }
+  { path: 'todo/edit/id/:id', component: TodoEditComponent },
+  { path: 'todo/detail/id/:id', component: TodoDetailComponent }
 ];
 @NgModule({
   imports: [ RouterModule.forRoot(routes) ],

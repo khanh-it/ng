@@ -9,8 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+// Models
+var task_1 = require("../../models/task");
 // Services
-var task_1 = require("../../services/repos/task");
+var task_2 = require("../../services/repos/task");
 var TodoListComponent = (function () {
     /**/
     function TodoListComponent(_repoTask) {
@@ -21,6 +23,8 @@ var TodoListComponent = (function () {
     /**/
     TodoListComponent.prototype.ngOnInit = function () {
         var _this = this;
+        //
+        this.task_priorities = task_1.TaskModel.returnPriorities();
         //console.log('ngOnInit');
         this._repoTask.getTasks()
             .then(function (tasks) {
@@ -37,6 +41,10 @@ var TodoListComponent = (function () {
         //console.log('[TodoListComponent][getSortedTasks]!');
         return this._tasks;
     };
+    /***/
+    TodoListComponent.prototype.getTaskPriorityName = function (priority) {
+        return this.task_priorities[priority];
+    };
     return TodoListComponent;
 }());
 TodoListComponent = __decorate([
@@ -46,7 +54,7 @@ TodoListComponent = __decorate([
         templateUrl: 'tmpl.html',
         styleUrls: ['styles.css']
     }),
-    __metadata("design:paramtypes", [task_1.Task_RepoService])
+    __metadata("design:paramtypes", [task_2.Task_RepoService])
 ], TodoListComponent);
 exports.TodoListComponent = TodoListComponent;
 //# sourceMappingURL=index.js.map

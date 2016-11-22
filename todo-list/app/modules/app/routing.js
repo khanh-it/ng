@@ -19,8 +19,8 @@ var routes = [
     { path: '', component: index_1.TodoListComponent },
     { path: 'todo/list', component: index_1.TodoListComponent },
     { path: 'todo/create', component: index_2.TodoCreateComponent },
-    { path: 'todo/edit/id:id', component: index_3.TodoEditComponent },
-    { path: 'todo/detail/id:id', component: index_4.TodoDetailComponent }
+    { path: 'todo/edit/id/:id', component: index_3.TodoEditComponent },
+    { path: 'todo/detail/id/:id', component: index_4.TodoDetailComponent }
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {

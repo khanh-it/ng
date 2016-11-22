@@ -18,12 +18,15 @@
 
 <!-- list of todo -->
 <div class="page-content">
-  <ul class="todo-list" *ngIf="_tasks">
-    <li *ngFor="let task of getSortedTasks()">
-      <span>{{task.id}}: {{task.doc.name}}</span><br>
-      <span>{{task.doc.note}}</span><br>
-      <span>{{task.doc.priority}}</span>
-      <i class="btn-del"></i>
+  <ul class="todo-list list-group" *ngIf="_tasks">
+    <li *ngFor="let task of getSortedTasks(); let idx = index;" class="list-group-item">
+      <a routerLink="todo/detail/id/{{task.id}}" class="badge">detail</a>
+      <a routerLink="todo/edit/id/{{task.id}}" class="badge">edit</a>
+      <h4 class="list-group-item-heading">{{task.doc.name}}</h4>
+      <p class="list-group-item-text">
+        N: {{task.doc.note}}<br/>
+        P: <span>{{getTaskPriorityName(task.doc.priority)}}</span>
+      </p>
     </li>
   </ul>
 </div>

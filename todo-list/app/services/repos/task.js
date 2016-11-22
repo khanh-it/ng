@@ -44,7 +44,7 @@ var Task_RepoService = (function () {
             'include_docs': true,
         })
             .then(function (docs) {
-            console.log('docs: ', docs);
+            //console.log('docs: ', docs);
             /*if (!docs.total_rows) {
             /*    this._defTasks.forEach((task, idx) => {
                   docs.rows.push(task);
@@ -62,6 +62,19 @@ var Task_RepoService = (function () {
         //
         task.genID();
         return this._PouchDBService.getDB().put(task);
+    };
+    Task_RepoService.prototype.getTask = function (id) {
+        var db = this._PouchDBService.getDB();
+        return db.allDocs({
+            'include_docs': true, 'key': id
+        })
+            .then(function (docs) {
+            return docs.rows[0];
+        })
+            .catch(function (err) {
+            console.log("Get task failed!", err);
+            return null;
+        });
     };
     return Task_RepoService;
 }());

@@ -17,10 +17,15 @@ export class TodoListComponent implements OnInit {
   protected _tasks: TaskModel[] = [];
 
   /**/
+  public task_priorities: string[];
+
+  /**/
   public constructor(protected _repoTask: Task_RepoService) {}
 
   /**/
   ngOnInit(): void {
+    //
+    this.task_priorities = TaskModel.returnPriorities();
     //console.log('ngOnInit');
     this._repoTask.getTasks()
       .then((tasks) => {
@@ -38,5 +43,10 @@ export class TodoListComponent implements OnInit {
   public getSortedTasks():TaskModel[] {
     //console.log('[TodoListComponent][getSortedTasks]!');
     return this._tasks;
+  }
+
+  /***/
+  public getTaskPriorityName(priority) {
+    return this.task_priorities[priority];
   }
 }
