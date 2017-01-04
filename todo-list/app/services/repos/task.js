@@ -15,21 +15,18 @@ var Task_RepoService = (function () {
     /***/
     function Task_RepoService(_PouchDBService) {
         this._PouchDBService = _PouchDBService;
-        /**
-         *
-         */
-        this._defTasks = [
-            { _id: '001_1', name: 'Task 01', priority: 0 },
-            { _id: '001_2', name: 'Task 02', priority: 0 },
-            { _id: '001_3', name: 'Task 03', priority: 0 },
-            { _id: '001_4', name: 'Task 04', priority: 0 },
-            { _id: '001_5', name: 'Task 05', priority: 0 },
-            { _id: '001_6', name: 'Task 06', priority: 0 },
-            { _id: '001_7', name: 'Task 07', priority: 0 },
-            { _id: '001_8', name: 'Task 08', priority: 0 },
-            { _id: '001_9', name: 'Task 09', priority: 0 },
-            { _id: '001_10', name: 'Task 10', priority: 0 },
-        ];
+        /*protected _defTasks: TaskModel[] = [
+          {_id: '001_1', name: 'Task 01', priority: 0},
+          {_id: '001_2', name: 'Task 02', priority: 0},
+          {_id: '001_3', name: 'Task 03', priority: 0},
+          {_id: '001_4', name: 'Task 04', priority: 0},
+          {_id: '001_5', name: 'Task 05', priority: 0},
+          {_id: '001_6', name: 'Task 06', priority: 0},
+          {_id: '001_7', name: 'Task 07', priority: 0},
+          {_id: '001_8', name: 'Task 08', priority: 0},
+          {_id: '001_9', name: 'Task 09', priority: 0},
+          {_id: '001_10', name: 'Task 10', priority: 0},
+        ];*/
         /**
          *
          */
@@ -63,13 +60,18 @@ var Task_RepoService = (function () {
         task.genID();
         return this._PouchDBService.getDB().put(task);
     };
+    Task_RepoService.prototype.edit = function (task) {
+        //
+        console.log('edit task, doc: ', task);
+        return this._PouchDBService.getDB().put(task);
+    };
     Task_RepoService.prototype.getTask = function (id) {
         var db = this._PouchDBService.getDB();
         return db.allDocs({
             'include_docs': true, 'key': id
         })
             .then(function (docs) {
-            return docs.rows[0];
+            return (docs.rows && docs.rows[0] && docs.rows[0].doc);
         })
             .catch(function (err) {
             console.log("Get task failed!", err);

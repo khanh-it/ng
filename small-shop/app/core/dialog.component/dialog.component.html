@@ -1,0 +1,49 @@
+<!-- app-dialog-alert -->
+<div #eleAlert class="app-dialog-overlay" hidden>
+  <div class="clearfix app-dialog app-dialog-alert shadow-br-3">
+    <div class="app-dialog-header">
+      {{_tranServ._("Alert")}}:
+      <button class="btn btn-ok btn-xs btn-default pull-right">x</button>
+    </div>
+    <div class="app-dialog-body"></div>
+    <div class="app-dialog-footer">
+      <button class="btn btn-ok btn-sm btn-default shadow-br-3">{{_tranServ._("OK")}}</button>
+    </div>
+  </div>
+</div>
+<!-- end#app-dialog-alert -->
+
+<!-- app-dialog-confirm -->
+<div #eleConfirm class="app-dialog-overlay" hidden>
+  <div #eleConfirm class="app-dialog app-dialog-confirm shadow-br-3">
+    <div class="app-dialog-header">
+      {{_tranServ._("Confirm")}}:
+      <button class="btn btn-cancel btn-xs btn-default pull-right">x</button>
+    </div>
+    <div class="app-dialog-body"></div>
+    <div class="app-dialog-footer">
+      <button class="btn btn-ok btn-sm btn-default shadow-br-3">{{_tranServ._("OK")}}</button>
+      <button class="btn btn-cancel btn-sm btn-default shadow-br-3">{{_tranServ._("Cancel")}}</button>
+    </div>
+  </div>
+</div>
+<!-- end#app-dialog-confirm -->
+
+<!-- app-dialog-prompt -->
+<div #elePrompt class="app-dialog-overlay" hidden>
+  <div #elePrompt class="app-dialog app-dialog-prompt shadow-br-3">
+    <div class="app-dialog-header">
+      {{_tranServ._("Prompt")}}:
+      <button class="btn btn-cancel btn-xs btn-default pull-right">x</button>
+    </div>
+    <div class="app-dialog-body">
+      <span></span>
+      <input type="text" name="app-dialog-prompt-input" class="form-control input-sm" autocomplete="off">
+    </div>
+    <div class="app-dialog-footer">
+      <button class="btn btn-ok btn-sm btn-default shadow-br-3">{{_tranServ._("OK")}}</button>
+      <button class="btn btn-cancel btn-sm btn-default shadow-br-3">{{_tranServ._("Cancel")}}</button>
+    </div>
+  </div>
+</div>
+<!-- end#app-dialog-prompt -->

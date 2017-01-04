@@ -1,0 +1,70 @@
+<!-- app-login-comp -->
+<div id="app-login-comp" class="clearfix app-login-comp"><table><tbody>
+  <!-- app-login-comp-cell -->
+  <tr><td>
+    <!-- panel -->
+    <div class="panel panel-default shadow-br-3">
+      <!-- panel-heading -->
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="glyphicon glyphicon-home"></span>
+          {{_tranServ._('Đăng nhập hệ thống')}}
+        </h3>
+      </div>
+      <!-- end#panel-heading -->
+      <!-- panel-body -->
+      <div class="panel-body">
+        <!-- form-login -->
+        <form method="POST" *ngIf="!formData.formSubmitted" #formLoginNG="ngForm" #formLoginEle (ngSubmit)="onFormSubmit(formLoginNG, formLoginEle)">
+          <div class="form-group">
+            <!-- <label for="username">{{_tranServ._('Tên đăng nhập')}}</label> -->
+            <div class="input-group shadow-br-3">
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-user"></span>
+              </span>
+              <input type="text" id="username" class="form-control" required [(ngModel)]="formData.username" name="formData[username]" #usernameNG="ngModel" placeholder="{{_tranServ._('Tên đăng nhập')}}">
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-asterisk text-danger"></span>
+              </span>
+            </div>
+            <div [hidden]="usernameNG.valid || usernameNG.pristine"  class="alert alert-xs alert-danger">
+              <small>{{_tranServ._('Tên đăng nhập là bắt buộc!')}}</small>
+            </div>
+          </div>
+          <div class="form-group">
+            <!-- <label for="password">{{_tranServ._('Mật khẩu')}}</label> -->
+            <div class="input-group shadow-br-3">
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-sunglasses"></span>
+              </span>
+              <input type="password" class="form-control" required [(ngModel)]="formData.password" name="formData[password]" #passwordNG="ngModel" placeholder="{{_tranServ._('Mật khẩu')}}">
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-asterisk text-danger"></span>
+              </span>
+            </div>
+            <div [hidden]="passwordNG.valid || passwordNG.pristine"  class="alert alert-xs alert-danger">
+              <small>{{_tranServ._('Mật khẩu là bắt buộc!')}}</small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="remember">
+              <input id="remember" type="checkbox" [(ngModel)]="formData.remember" name="formData[remember]">
+              {{_tranServ._('Ghi nhớ đăng nhập?')}}
+            </label>
+            <div class="clearfix text-right">
+              <button type="submit" class="btn btn-default btn-sm shadow-br-3">
+                <span class="glyphicon glyphicon-log-in"></span>
+                {{_tranServ._('Đăng nhập')}}
+              </button>
+            </div>
+          </div>
+        </form>
+        <!-- end#form-login -->
+      </div>
+      <!-- end#panel-body -->
+    </div>
+    <!-- end#panel -->
+  </td></tr>
+  <!-- end#app-login-comp-cell -->
+</tbody></table></div>
+<!-- end#app-login-comp -->

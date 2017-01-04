@@ -41,8 +41,13 @@ var TodoEditComponent = (function () {
         this.task = new task_1.TaskModel();
         //
         this.route.params
-            .switchMap(function (params) { return _this._repoTask.getTask(params['id']); })
-            .subscribe(function (task) { return _this.task = task; });
+            .switchMap(function (params, index) {
+            var obserInput = _this._repoTask.getTask(params['id']);
+            return obserInput;
+        })
+            .subscribe(function (task) {
+            _this.task = task;
+        });
     };
     /**/
     TodoEditComponent.prototype.onFormSubmit = function () {
@@ -50,16 +55,14 @@ var TodoEditComponent = (function () {
         //
         console.log('onFormSubmit - task: ', this.task);
         //
-        var rs = this._repoTask.insert(this.task)
-            .then(function (_t) {
-            //
-            _this.task = new task_1.TaskModel();
+        var rs = this._repoTask.edit(this.task)
+            .then(function () {
             // Rerender form...
             _this.submitted = true;
             setTimeout(function () { return _this.submitted = false; }, 0);
         })
             .catch(function (err) {
-            alert('insert data failed: ' + err);
+            alert('edit data failed: ' + err);
         });
     };
     TodoEditComponent.prototype.isDFPriority = function (value) {

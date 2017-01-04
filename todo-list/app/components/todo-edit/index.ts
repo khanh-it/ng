@@ -44,8 +44,13 @@ export class TodoEditComponent implements OnInit {
     this.task = new TaskModel();
     //
     this.route.params
-      .switchMap((params: Params) => this._repoTask.getTask(params['id']))
-      .subscribe(task => this.task = task)
+      .switchMap((params: Params, index: number) => {
+         let obserInput = this._repoTask.getTask(params['id']);
+         return obserInput;
+      })
+      .subscribe(task => {
+        this.task = task;
+      })
     ;
   }
 
@@ -54,16 +59,14 @@ export class TodoEditComponent implements OnInit {
     //
     console.log('onFormSubmit - task: ', this.task);
     //
-    let rs = this._repoTask.insert(this.task)
-      .then((_t) => {
-        //
-        this.task = new TaskModel();
+    let rs = this._repoTask.edit(this.task)
+      .then(() => {
         // Rerender form...
         this.submitted = true;
         setTimeout(() => this.submitted = false, 0);
       })
       .catch((err) => {
-        alert('insert data failed: ' + err);
+        alert('edit data failed: ' + err);
       })
     ;
   }

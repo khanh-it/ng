@@ -1,0 +1,22 @@
+/* app/core/login.component/login.component.css */
+.app-login-comp{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 5%;
+}
+.app-login-comp table, .app-login-comp tr, .app-login-comp td{
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+.app-login-comp .panel{
+  max-width: 380px;
+  margin: auto;
+}
+.app-login-comp .alert{
+  margin-top: 3px;
+}
+/* end#app/core/login.component/login.component.css */

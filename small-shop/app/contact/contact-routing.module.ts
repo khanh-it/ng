@@ -1,0 +1,13 @@
+import { NgModule }             from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+
+// component(s)
+import { ContactComponent } from './contact.component';
+
+@NgModule({
+  imports: [RouterModule.forChild([
+    { path: 'contact', component: ContactComponent }
+  ])],
+  exports: [RouterModule]
+})
+export class ContactRoutingModule {}

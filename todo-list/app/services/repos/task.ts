@@ -9,10 +9,7 @@ import { PouchDBService } from '../pouchdb';
 
 @Injectable()
 export class Task_RepoService {
-  /**
-   *
-   */
-  protected _defTasks: TaskModel[] = [
+  /*protected _defTasks: TaskModel[] = [
     {_id: '001_1', name: 'Task 01', priority: 0},
     {_id: '001_2', name: 'Task 02', priority: 0},
     {_id: '001_3', name: 'Task 03', priority: 0},
@@ -23,7 +20,7 @@ export class Task_RepoService {
     {_id: '001_8', name: 'Task 08', priority: 0},
     {_id: '001_9', name: 'Task 09', priority: 0},
     {_id: '001_10', name: 'Task 10', priority: 0},
-  ];
+  ];*/
 
   /**
    *
@@ -65,13 +62,19 @@ export class Task_RepoService {
     return this._PouchDBService.getDB().put(task);
   }
 
+  public edit(task:TaskModel):Promise<Object> {
+    //
+    console.log('edit task, doc: ', task);
+    return this._PouchDBService.getDB().put(task);
+  }
+
   public getTask(id:string):Promise<TaskModel>|Promise<null> {
     let db = this._PouchDBService.getDB();
     return db.allDocs({
         'include_docs': true, 'key': id
       })
       .then(docs => {
-        return docs.rows[0];
+        return (docs.rows && docs.rows[0] && docs.rows[0].doc);
       })
       .catch((err) => {
         console.log(`Get task failed!`, err);
