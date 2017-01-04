@@ -31,6 +31,10 @@ export class PouchdbDbService extends AbstractDbService {
     //
     this._db = new PouchDB(config.dbname, {'adapter': 'idb'});
     this._dbMem = <PouchDB>(new PouchDB(config.dbname, {'adapter': 'memory'}));
+
+    //
+    Object.defineProperty(window, '_pouchdbServ', {value: this});
+
     //
     return this;
   }

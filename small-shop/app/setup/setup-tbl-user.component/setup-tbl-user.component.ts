@@ -20,11 +20,7 @@ export class SetupTblUserComponent implements OnInit {
   constructor(
     protected _pouchdbServ: PouchdbDbService,
     protected _useRepoServ: UserRepoService
-  ) {
-    Object.defineProperty(window, '_pouchdbServ', {
-      value: this._pouchdbServ
-    });
-  }
+  ) {}
 
   ngOnInit() {
     // design document

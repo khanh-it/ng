@@ -36,17 +36,17 @@ export class UserRepoService extends AbstractRepoService {
     /*  */
   }
 
-  public static LOGGED_IN_USER_ID_KEY:string = 'LOGGED_IN_USER_ID';
+  public static USER_LOGGED_ID_KEY:string = 'USER_LOGGED_ID';
 
   /* Initialize */
-  protected _loggedInUserID(userID?:string):string|null {
-    if (userID) {
-      localStorage.setItem(UserRepoService.LOGGED_IN_USER_ID_KEY, new String(userID).toString());
-    } else {
-      userID = localStorage.getItem(UserRepoService.LOGGED_IN_USER_ID_KEY);
+  protected _loggedInUserID(userID?:string):string {
+    if (0 in arguments) {
       if (null === userID || undefined === userID) {
         userID = '';
       }
+      localStorage.setItem(UserRepoService.USER_LOGGED_ID_KEY, '' + userID);
+    } else {
+      userID = localStorage.getItem(UserRepoService.USER_LOGGED_ID_KEY);
     }
     return userID;
   }
@@ -58,7 +58,9 @@ export class UserRepoService extends AbstractRepoService {
         let userID = this._loggedInUserID();
         if (userID) {
           return this._dbS.get(userID)
-            .then((user:UserModel) => rs(user) )
+            .then((user:UserModel) => {
+              rs(user);
+            })
           ;
         } else {
           rs(null);
@@ -70,6 +72,13 @@ export class UserRepoService extends AbstractRepoService {
     });
   }
 
+  /** Store user's logged in info (data) */
+  public setLoggedInUser(user:UserModel|null):UserRepoService {
+    this._loggedInUser = user;
+    this._loggedInUserID(user && user._id);
+    return this;
+  }
+
   /** Get user data for login */
   public getUser4Login(
     username:string,
@@ -77,8 +86,7 @@ export class UserRepoService extends AbstractRepoService {
     autoStoreWhenSuccess:boolean = true
   ):Promise<UserModel|void|boolean> {
     let DDocName = UserModel.getDDocName('UNIQ_username');
-    return this._dbS
-      .query(DDocName, {
+    return this._dbS.query(DDocName, {
         key: username,
         include_docs: true,
         limit: 1
@@ -91,6 +99,10 @@ export class UserRepoService extends AbstractRepoService {
           if (password != user.password) {
             return false;
           }
+          // Store user info
+          autoStoreWhenSuccess && this.setLoggedInUser(user);
+          // Return
+          return user;
         }
       })
     ;

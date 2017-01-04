@@ -45,8 +45,6 @@ export class LoginComponent implements OnInit {
 
   /** */
   ngOnInit() {
-    let user = new UserModel({});
-    console.log('user: ', user);
     // Check if user logged in, then redirect to home page
     this._redirect2HomePageIfLoggedIn();
   }
@@ -69,7 +67,6 @@ export class LoginComponent implements OnInit {
 
   /** */
   protected onFormSubmit() {
-    console.log('onFormSubmit', this.formData);
     // Data validation
     if (!this.formData.username || !this.formData.password) {
       this._dialogComp.alert(
@@ -81,23 +78,27 @@ export class LoginComponent implements OnInit {
     //
     this._userRepoServ.getUser4Login(
       this.formData.username,
-      UserModel.encodePassword(this.formData.password)
+      UserModel.encodePassword(this.formData.password),
+      true // Store user info
     ).then((user:UserModel|void|boolean) => {
       if (false === user) {
         this._dialogComp.alert(
-          this._tranServ._('Mật khẩu chưa đúng!')
+          this._tranServ._('Mật khẩu đăng nhập chưa đúng.')
         );
       // Case: password was not matched
-      } else if (user instanceof UserModel) {
-        console.log('Login ok. User: ', user);
-        /*this._router.navigate([''], {
-          relativeTo: this._route,
-          queryParams: {'uLIRdr': 1}
-        });*/
-
-      } else {
+      } else if (null === user || undefined === user) {
         this._dialogComp.alert(
           this._tranServ._('Tài khoản đăng nhập không tồn tại.')
+        );
+      } else if (user) {
+        // Redirect to home page!
+        this._router.navigate([''], {
+          relativeTo: this._route,
+          queryParams: {}
+        });
+      } else {
+        this._dialogComp.alert(
+          this._tranServ._('Đăng nhập không thành công.')
         );
       }
     });

@@ -11,7 +11,7 @@ import { AbstractModel } from './abstract.model';
 export class UserModel extends AbstractModel {
 
   /**  */
-  public static TABLE_NAME:string = 'USER';
+  public static readonly TABLE_NAME:string = 'USER';
 
   /**  */
   public static encodePassword(data:string):string {
@@ -19,7 +19,10 @@ export class UserModel extends AbstractModel {
   }
 
   /**  */
-  protected static _arrActive:string[] = ['Chưa kích hoạt', 'Kích hoạt'];
+  protected static _arrActive:string[] = [
+    'Chưa kích hoạt',
+    'Kích hoạt'
+  ];
 
   /**  */
   public static returnArrActive():string[] {
@@ -28,58 +31,67 @@ export class UserModel extends AbstractModel {
 
 
   /**  */
-  protected username:string;
+  public username:string = this._initData['username']
+    ? ('' + this._initData['username']) : ''
+  ;
   /**  */
-  public getUsername():string {
-    return this.username;
-  }
-  /**  */
+  //public getUsername():string { return this.username; }
+  /**
   public setUsername(data:string):UserModel {
+    data = (undefined === data || null === data) ? '' : data;
     this.username = '' + data;
     return this;
-  }
+  }  */
 
   /**  */
-  protected password:string;
+  protected password:string = this._initData['password']
+    ? ('' + this._initData['password']) : ''
+  ;
   /**  */
-  public getPassword():string {
+  public selfEncodePassword():string {
+    if (undefined !== this.password) {
+      this.password = UserModel.encodePassword(this.password);
+    }
     return this.password;
   }
   /**  */
+  //public getPassword():string { return this.password; }
+  /**
   public setPassword(data:string):UserModel {
     data = (undefined === data) ? '' : UserModel.encodePassword(data);
     this.password = data;
     return this;
-  }
+  }  */
 
   /**  */
-  public active:number;
+  public active:number = (UserModel.ACTIVE_NO === this._initData['active'])
+    ? this._initData['active']
+    : UserModel.ACTIVE_YES
+  ;
   /**  */
-  public getActive():number {
-    return this.active;
-  }
-  /**  */
+  //public getActive():number { return this.active; }
+  /**
   public setActive(data:number):UserModel {
     data = (UserModel.ACTIVE_NO === data) ? data : UserModel.ACTIVE_YES;
     this.active = data;
     return this;
-  }
+  }  */
 
   /**  */
   public static readonly ACTIVE_NO:number = 0;
   /**  */
   public static readonly ACTIVE_YES:number = 1;
 
+  /**  */
+  public admin:number = (UserModel.ADMIN_YES === this._initData['admin'])
+    ? this._initData['admin']
+    : UserModel.ADMIN_NO
+  ;
+  /**  */
+  public static readonly ADMIN_NO:number = 0;
+  /**  */
+  public static readonly ADMIN_YES:number = 1;
+
   /** Initialize */
-  protected init(
-    data: {username:string, password?:string, active?:number}
-      = {username: '', password: undefined, active: UserModel.ACTIVE_YES}
-  ):UserModel {
-    console.log('UserModel. Data: ', data);
-    this.setUsername(data.username);
-    this.setPassword(data.password);
-    this.setActive(data.active);
-    // Return
-    return this;
-  }
+  //protected init(data?:any):UserModel { return this; }
 }

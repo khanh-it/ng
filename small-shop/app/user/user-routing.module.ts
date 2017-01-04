@@ -8,9 +8,6 @@ import { UserComponent } from './user.component/user.component';
 import { UserListComponent } from './user-list.component/user-list.component';
 import { UserDetailComponent } from './user-detail.component/user-detail.component';
 import { UserLoginComponent } from './user-login.component/user-login.component';
-/* --- GroupUser */
-import { GroupUserComponent } from './group-user.component/group-user.component';
-import { GroupUserListComponent } from './group-user-list.component/group-user-list.component';
 
 /* Services */
 
@@ -38,11 +35,6 @@ const routes: Routes = [
   //{ path: 'user/detail/:id', component: UserDetailComponent, data: {} },
   //{ path: 'user/delete', component: UserComponent, data: {} },
 /* #end.user */
-
-/* group-user */
-  { path: 'group-user', component: GroupUserListComponent, data: {} },
-  { path: 'group-user/list', component: GroupUserListComponent, data: {} },
-/* #end.group-user */
 ];
 
 @NgModule({

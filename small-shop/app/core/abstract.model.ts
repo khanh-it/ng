@@ -15,41 +15,48 @@ export abstract class AbstractModel {
     return this.TABLE_NAME + '/' + index;
   }
 
+  /** Construct data */
+  protected _initData:any;
+
   /** Table name */
-  public TBL:string = '';
+  public TBL:string;
 
   /** Primary */
-  public _id:string = '';
+  public _id:string;
 
   /** Revision */
-  public _rev:string = '';
+  public _rev:string;
 
   /** Initialize */
   protected static genIDStr() {
     return (new Date()).toISOString();
   }
 
+  /** Helper: is data plain object? */
+  public static isPlainObject(data:any):boolean {
+    return (Object.prototype.toString.call(data) === "[object Object]");
+  }
+
   /** Constructor */
   public constructor (data?:any) {
     // Format data
-    if (Object.prototype.toString.call(data) !== "[object Object]") {
-      data = {};
-    }
+    data = AbstractModel.isPlainObject(data) ? data : {};
     // Auto init
     // --- Table name
     this.TBL = data.TBL = '' + (data.TBL ? data.TBL
       : Object.getPrototypeOf(this).constructor.TABLE_NAME
     );
+    // --- ID
+    this._id =data._id = '' + (data._id ? data._id : AbstractModel.genIDStr());
+    // --- Revision
+    this._rev = data._rev = data._rev;
+    // Data validation
     if (!this.TBL) {
       throw Error('Missing TABLE_NAME for model constructor!');
     }
-    // --- ID
-    this._id = data._id = '' + (data._id ? data._id : AbstractModel.genIDStr());
-    // --- Revision
-    this._rev = data._rev = data._rev;
 
     // Initialize
-    this.init(data);
+    this.init(this._initData = data);
   }
 
   /** Self generate id */
@@ -66,5 +73,18 @@ export abstract class AbstractModel {
   }
 
   /** Initialize */
-  protected abstract init(data?:any):any;
+  protected init(data?:any):any {};
+
+  /**
+  public fromArray(data:any):void {
+    // Format data
+    if (!AbstractModel.isPlainObject(data)) {
+      data = {};
+    }
+    for (let prop in data) {
+      if (this.hasOwnProperty(prop)) {
+        this[prop] = data[prop];
+      }
+    }
+  } */
 }
