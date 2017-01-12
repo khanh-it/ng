@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
-/* 3rd Modules */
-// --- phpjs
-import * as php from 'phpjs/index';
-Object.defineProperty(window, 'phpjs', {
-  value: php
-});
+// Services
+import { PhpjsService } from '../../core/phpjs.service';
+
+//
+import { Subject as RxSubject } from 'rxjs/Subject';
+Object.defineProperty(window, 'RxSubject', {value: RxSubject});
+//console.log('RxSubject: ', RxSubject);
 
 @Component({
   moduleId: module.id,
@@ -14,16 +15,34 @@ Object.defineProperty(window, 'phpjs', {
   styleUrls: [ 'test.component.css' ],
   providers: [ ],
 })
-export class TestComponent implements OnInit {
+export class TestComponent /*implements OnInit*/ {
 
-  constructor(
-    protected _pouchdbServ: PouchdbDbService
-  ) {
-    //console.log('php: ', php);
-    Object.defineProperty(window, '_pouchdbServ', {
-      value: this._pouchdbServ
-    });
+  public oneAtATime:boolean = true;
+  public items:string[] = ['Item 1', 'Item 2', 'Item 3'];
+
+  public status:Object = {
+    isFirstOpen: true,
+    isFirstDisabled: false
+  };
+
+  public groups:any[] = [
+    {
+      title: 'Dynamic Group Header - 1',
+      content: 'Dynamic Group Body - 1'
+    },
+    {
+      title: 'Dynamic Group Header - 2',
+      content: 'Dynamic Group Body - 2'
+    }
+  ];
+
+  public addItem():void {
+    this.items.push(`Items ${this.items.length + 1}`);
   }
 
-  ngOnInit() {}
+  constructor (
+    protected _phpjsServ: PhpjsService
+  ) {
+
+  }
 }

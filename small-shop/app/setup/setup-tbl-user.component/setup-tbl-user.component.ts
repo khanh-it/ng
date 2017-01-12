@@ -65,10 +65,12 @@ export class SetupTblUserComponent implements OnInit {
         let arr = [];
         for (let i = 1; i <= 1; i++) {
            let userAdmin = new UserModel({
-             //'TBL': tblName,
              'username': 'admin',
-             'password': 'admin' + i
-          });          console.log('[SetupTblUserComponent] userAdmin:', userAdmin);
+             'password': 'admin',
+             'fullname': 'Administrator',
+          });
+          userAdmin.selfEncodePassword();
+          console.log('[SetupTblUserComponent] userAdmin:', userAdmin);
           arr.push(
             this._pouchdbServ.putUniq(tblName + '/UNIQ_username', 'username', userAdmin)
           );

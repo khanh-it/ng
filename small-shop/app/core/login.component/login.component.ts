@@ -26,7 +26,7 @@ import { UserModel } from '../user.model';
 export class LoginComponent implements OnInit {
 
   /** */
-  protected formData = {
+  public formData = {
     'formSubmitted': false,
     'username': '',
     'password': '',
@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
   /** */
   constructor(
     //protected _phpjsServ: PhpjsService,
-    protected _tranServ: TranslatorService,
+    public transServ: TranslatorService,
     protected _router: Router,
     protected _route: ActivatedRoute,
     protected _userRepoServ: UserRepoService,
@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
     // Data validation
     if (!this.formData.username || !this.formData.password) {
       this._dialogComp.alert(
-        this._tranServ._('Vui lòng nhập đủ thông tin bắt buộc.')
+        this.transServ._('Vui lòng nhập đủ thông tin bắt buộc.')
       );
       return false;
     }
@@ -83,12 +83,12 @@ export class LoginComponent implements OnInit {
     ).then((user:UserModel|void|boolean) => {
       if (false === user) {
         this._dialogComp.alert(
-          this._tranServ._('Mật khẩu đăng nhập chưa đúng.')
+          this.transServ._('Mật khẩu đăng nhập chưa đúng.')
         );
       // Case: password was not matched
       } else if (null === user || undefined === user) {
         this._dialogComp.alert(
-          this._tranServ._('Tài khoản đăng nhập không tồn tại.')
+          this.transServ._('Tài khoản đăng nhập không tồn tại.')
         );
       } else if (user) {
         // Redirect to home page!
@@ -98,7 +98,7 @@ export class LoginComponent implements OnInit {
         });
       } else {
         this._dialogComp.alert(
-          this._tranServ._('Đăng nhập không thành công.')
+          this.transServ._('Đăng nhập không thành công.')
         );
       }
     });

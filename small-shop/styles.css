@@ -1,4 +1,6 @@
 body{
+  min-width: 1000px;
+  overflow: auto;
   background-color: #EFEFEF;
 }
 /* */

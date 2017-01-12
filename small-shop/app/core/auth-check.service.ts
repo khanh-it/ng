@@ -12,6 +12,13 @@ import { UserRepoService } from './user-repo.service';
 @Injectable()
 export class AuthCheckService {
 
+  protected _ignores:string[] = [];
+
+  public setIgnores(ignores:string[]):AuthCheckService {
+    this._ignores = (ignores instanceof Array) ? ignores : [];
+    return this;
+  }
+
   protected static _ROUTE_PATH_PAGE_LOGIN = '/login';
 
   constructor(
@@ -28,6 +35,12 @@ export class AuthCheckService {
     // Register handlers to router's navigation events...
     this._router.events.subscribe((evt) => {
       if (evt instanceof NavigationStart) {
+        // Ignore?
+        for (let ignore of this._ignores) {
+          if (evt.url.indexOf(ignore) === 0) {
+            return;
+          }
+        }
         // If not in login page
         if (evt.url.indexOf(AuthCheckService._ROUTE_PATH_PAGE_LOGIN) < 0) {
           this.redirect2LoginPageIfNotLoggedIn();

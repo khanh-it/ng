@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 /* 3rd Modules */
 // --- phpjs
-let phpjs:any = require('../../../node_modules/phpjs/index.js');
+import * as phpjs from '../../node_modules/phpjs/index.js';
 if (!window.hasOwnProperty('_phpjs')) {
   Object.defineProperty(window, '_phpjs', {value: phpjs});
 }
@@ -10,14 +10,16 @@ if (!window.hasOwnProperty('_phpjs')) {
 @Injectable()
 export class PhpjsService {
 
+  public _:any;
+
   /** Constructor */
   public constructor () {
-    Object.defineProperty(window, '_phpjsServ', {value: this});
+    Object.defineProperty(window, '_phpjsServ', {value: this._ = this});
   }
 
-  public _():any {
+  /*public _():any {
     let args:any[] = Array.prototype.slice.call(arguments);
     let [method, ...params] = args;
     return phpjs[method].apply(phpjs, params);
-  }
+  }*/
 }

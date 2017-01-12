@@ -37,7 +37,7 @@ export class DialogComponent implements OnInit, AfterViewInit {
 
   /**  */
   constructor(
-    protected _tranServ: TranslatorService
+    public transServ: TranslatorService
   ) {}
 
   /**  */

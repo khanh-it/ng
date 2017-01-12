@@ -12,11 +12,11 @@ export abstract class AbstractModel {
    *
    */
   public static getDDocName(index:string):string {
-    return this.TABLE_NAME + '/' + index;
+    return this.TABLE_NAME + (index ? ('/' + index) : '');
   }
 
   /** Construct data */
-  protected _initData:any;
+  //protected _initData:any;
 
   /** Table name */
   public TBL:string;
@@ -56,7 +56,7 @@ export abstract class AbstractModel {
     }
 
     // Initialize
-    this.init(this._initData = data);
+    this.init(/*this._initData = */data);
   }
 
   /** Self generate id */

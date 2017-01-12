@@ -11,25 +11,25 @@ export class AppComponent {
   constructor() {}
 
   // only called for/if there is an @input variable set by parent.
-  ngOnChanges() {}
+  //ngOnChanges() {}
 
-  ngOnInit() {}
-
-  // Beware! Called frequently!
-  // Called in every change detection cycle anywhere on the page
-  ngDoCheck() {}
-
-  ngAfterContentInit() {}
+  //ngOnInit() {}
 
   // Beware! Called frequently!
   // Called in every change detection cycle anywhere on the page
-  ngAfterContentChecked() {}
+  //ngDoCheck() {}
 
-  ngAfterViewInit() {}
+  //ngAfterContentInit() {}
 
   // Beware! Called frequently!
   // Called in every change detection cycle anywhere on the page
-  ngAfterViewChecked() {}
+  //ngAfterContentChecked() {}
 
-  ngOnDestroy() {}
+  //ngAfterViewInit() {}
+
+  // Beware! Called frequently!
+  // Called in every change detection cycle anywhere on the page
+  //ngAfterViewChecked() {}
+
+  //ngOnDestroy() {}
 }

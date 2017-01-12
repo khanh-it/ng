@@ -25,7 +25,7 @@ export class LogoutComponent /*implements OnInit*/ {
 
   constructor(
     //protected _phpjsServ: PhpjsService,
-    protected _tranServ: TranslatorService,
+    public transServ: TranslatorService,
     protected _router: Router,
     protected _route: ActivatedRoute,
     protected _userRepoServ: UserRepoService,

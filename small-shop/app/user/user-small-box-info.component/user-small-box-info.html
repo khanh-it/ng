@@ -1,0 +1,10 @@
+<a href="#" (click)="selectUser(); $event.preventDefault();" class="clearfix user-small-box-info" [class.active]="isActive">
+  <span class="media-left">
+    <img alt="user-image" class="media-object user-img" [src]="getUserImgBase64(user)" />
+  </span>
+  <span class="media-body">
+    <span class="media-heading">{{user.fullname}} [{{user.username}}]</span><br/>
+    <small>{{transServ._(user.admin ? 'Tài khoản quản trị' : 'Tài khoản thường')}}</small><br/>
+    <small>{{transServ._(user.password ? 'Đã nhập mật khẩu' : 'Chưa nhập mật khẩu')}}</small>
+  </span>
+</a>

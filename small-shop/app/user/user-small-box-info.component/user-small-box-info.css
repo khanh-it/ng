@@ -1,0 +1,14 @@
+/* app/user/user.component/user-small-box-info.css */
+.user-small-box-info{
+  display: block;
+  padding: 2px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  color: inherit;
+}
+.user-small-box-info:hover, .user-small-box-info.active{
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+img.user-img{border: 1px solid silver;}
+/* end#app/user/user.component/user-small-box-info.css */

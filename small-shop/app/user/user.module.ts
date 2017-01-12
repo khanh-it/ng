@@ -6,29 +6,26 @@ import { UserRoutingModule } from './user-routing.module';
 // component(s)
 /* --- User */
 import { UserComponent } from './user.component/user.component';
-import { UserListComponent } from './user-list.component/user-list.component';
-import { UserDetailComponent } from './user-detail.component/user-detail.component';
-import { UserLoginComponent } from './user-login.component/user-login.component';
+import { UserSmallBoxInfo } from './user-small-box-info.component/user-small-box-info.component'
 
 // service(s)
-import { UserService } from './user.service';
+import { UserRepoService } from './user-repo.service';
 
 @NgModule({
-  imports: [ SharedModule, UserRoutingModule ],
+  imports: [
+    SharedModule,
+    UserRoutingModule
+  ],
   declarations: [
   // user
     UserComponent,
-    UserListComponent,
-    UserDetailComponent,
-    UserLoginComponent,
+    UserSmallBoxInfo
   // #end.user
   ],
   providers: [
-    UserService,
+    UserRepoService,
   ]
 })
 export class UserModule {
-  constructor () {
-    //console.log('UserModule::constructor');
-  }
+  constructor () {}
 }

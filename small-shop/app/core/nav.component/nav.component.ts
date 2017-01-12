@@ -23,11 +23,14 @@ import { UserRepoService } from '../user-repo.service';
 })
 export class NavComponent implements OnInit {
 
+  /** */
+  public isOpen:boolean = true;
+
   /** Logged user data? */
   protected _user:any;
 
   constructor(
-    protected _tranServ: TranslatorService,
+    public transServ: TranslatorService,
     protected _userRepoServ: UserRepoService
   ) {}
 

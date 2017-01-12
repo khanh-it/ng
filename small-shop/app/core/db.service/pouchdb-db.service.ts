@@ -1,12 +1,15 @@
 // PouchDB library
-/// <reference path="./pouchdb-db.service.d.ts"/>
-import { PouchDB } from 'pouchdb';
-if (!window.hasOwnProperty('PouchDB')) {
+//// <reference path="./pouchdb-db.service.d.ts"/>
+//import { PouchDB } from 'pouchdb';
+//if (!window.hasOwnProperty('PouchDB')) {
   // +++ PouchDB
-  require('../../../node_modules/pouchdb/dist/pouchdb.js');
+  import * as pouchdb from '../../../node_modules/pouchdb/dist/pouchdb.js';
+  const PouchDB = pouchdb.PouchDB;
+  declare interface PouchDB {};
   // +++ PouchDB plugins...
-  require('../../../node_modules/pouchdb/dist/pouchdb.memory.js');
-}
+  import * as pouchdbAdaper from '../../../node_modules/pouchdb/dist/pouchdb.memory.js';
+  const _dontUse_01 = pouchdbAdaper.PouchDB;
+//}
 
 //
 import { Injectable, Inject, OnInit } from '@angular/core';
@@ -17,9 +20,9 @@ import { AbstractDbService } from './abstract-db.service';
 @Injectable()
 export class PouchdbDbService extends AbstractDbService {
   /***/
-  protected _db:PouchDB;
+  protected _db:any;
   /***/
-  protected _dbMem:PouchDB;
+  protected _dbMem:any;
 
   /***/
   protected init(options?:any):PouchdbDbService {
@@ -30,7 +33,7 @@ export class PouchdbDbService extends AbstractDbService {
     }
     //
     this._db = new PouchDB(config.dbname, {'adapter': 'idb'});
-    this._dbMem = <PouchDB>(new PouchDB(config.dbname, {'adapter': 'memory'}));
+    this._dbMem = new PouchDB(config.dbname, {'adapter': 'memory'});
 
     //
     Object.defineProperty(window, '_pouchdbServ', {value: this});
@@ -55,7 +58,7 @@ export class PouchdbDbService extends AbstractDbService {
   public get(docID:string):Promise<any> {
     return new Promise((rs, rj) => {
       this._db
-        .get(docID, {include_doc: true})
+        .get(docID, {include_docs: true})
         .then((doc:any) => { rs(doc); })
         .catch(() => { rs(null); })
       ;

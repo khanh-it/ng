@@ -1,9 +1,11 @@
-/* 3rd Modules */
-// --- phpjs
-let phpjs:any = require('../../../node_modules/phpjs/index.js');
+// 3rd modules
+import * as phpjs from 'phpjs/build/npm.js';
 
-
+// Models
 import { AbstractModel } from './abstract.model';
+
+// Services
+import { PhpjsService } from './phpjs.service';
 
 /**
  *
@@ -15,7 +17,7 @@ export class UserModel extends AbstractModel {
 
   /**  */
   public static encodePassword(data:string):string {
-    return <string>phpjs.md5(data);
+    return '' + phpjs['md5'](data);
   }
 
   /**  */
@@ -29,11 +31,11 @@ export class UserModel extends AbstractModel {
     return UserModel._arrActive;
   }
 
+  /**  */
+  public fullname:string;
 
   /**  */
-  public username:string = this._initData['username']
-    ? ('' + this._initData['username']) : ''
-  ;
+  public username:string;
   /**  */
   //public getUsername():string { return this.username; }
   /**
@@ -44,9 +46,7 @@ export class UserModel extends AbstractModel {
   }  */
 
   /**  */
-  protected password:string = this._initData['password']
-    ? ('' + this._initData['password']) : ''
-  ;
+  protected password:string;
   /**  */
   public selfEncodePassword():string {
     if (undefined !== this.password) {
@@ -64,10 +64,7 @@ export class UserModel extends AbstractModel {
   }  */
 
   /**  */
-  public active:number = (UserModel.ACTIVE_NO === this._initData['active'])
-    ? this._initData['active']
-    : UserModel.ACTIVE_YES
-  ;
+  public active:number;
   /**  */
   //public getActive():number { return this.active; }
   /**
@@ -83,15 +80,29 @@ export class UserModel extends AbstractModel {
   public static readonly ACTIVE_YES:number = 1;
 
   /**  */
-  public admin:number = (UserModel.ADMIN_YES === this._initData['admin'])
-    ? this._initData['admin']
-    : UserModel.ADMIN_NO
-  ;
+  public admin:number;
   /**  */
   public static readonly ADMIN_NO:number = 0;
   /**  */
   public static readonly ADMIN_YES:number = 1;
 
   /** Initialize */
-  //protected init(data?:any):UserModel { return this; }
+  protected init(data?:any):UserModel {
+    /**  */
+    this.fullname = data['fullname'] ? ('' + data['fullname']) : '';
+    /**  */
+    this.username = data['username'] ? ('' + data['username']) : '';
+    /**  */
+    this.password = data['password'] ? ('' + data['password']) : '';
+    /**  */
+    this.active = (UserModel.ACTIVE_NO === data['active'])
+      ? data['active'] : UserModel.ACTIVE_YES
+    ;
+    /**  */
+    this.admin = (UserModel.ADMIN_YES === data['admin'])
+      ? data['admin'] : UserModel.ADMIN_NO
+    ;
+    // 
+    return this;
+  }
 }

@@ -8,7 +8,7 @@
       <div class="panel-heading">
         <h3 class="panel-title">
           <span class="glyphicon glyphicon-home"></span>
-          {{_tranServ._('Đăng nhập hệ thống')}}
+          {{transServ._('Đăng nhập hệ thống')}}
         </h3>
       </div>
       <!-- end#panel-heading -->
@@ -17,44 +17,44 @@
         <!-- form-login -->
         <form method="POST" *ngIf="!formData.formSubmitted" #formLoginNG="ngForm" #formLoginEle (ngSubmit)="onFormSubmit(formLoginNG, formLoginEle)">
           <div class="form-group">
-            <!-- <label for="username">{{_tranServ._('Tên đăng nhập')}}</label> -->
+            <!-- <label for="username">{{transServ._('Tên đăng nhập')}}</label> -->
             <div class="input-group shadow-br-3">
               <span class="input-group-addon">
                 <span class="glyphicon glyphicon-user"></span>
               </span>
-              <input type="text" id="username" class="form-control" required [(ngModel)]="formData.username" name="formData[username]" #usernameNG="ngModel" placeholder="{{_tranServ._('Tên đăng nhập')}}">
+              <input type="text" id="username" class="form-control" required [(ngModel)]="formData.username" name="formData[username]" #usernameNG="ngModel" placeholder="{{transServ._('Tên đăng nhập')}}">
               <span class="input-group-addon">
                 <span class="glyphicon glyphicon-asterisk text-danger"></span>
               </span>
             </div>
             <div [hidden]="usernameNG.valid || usernameNG.pristine"  class="alert alert-xs alert-danger">
-              <small>{{_tranServ._('Tên đăng nhập là bắt buộc!')}}</small>
+              <small>{{transServ._('Tên đăng nhập là bắt buộc!')}}</small>
             </div>
           </div>
           <div class="form-group">
-            <!-- <label for="password">{{_tranServ._('Mật khẩu')}}</label> -->
+            <!-- <label for="password">{{transServ._('Mật khẩu')}}</label> -->
             <div class="input-group shadow-br-3">
               <span class="input-group-addon">
                 <span class="glyphicon glyphicon-sunglasses"></span>
               </span>
-              <input type="password" class="form-control" required [(ngModel)]="formData.password" name="formData[password]" #passwordNG="ngModel" placeholder="{{_tranServ._('Mật khẩu')}}">
+              <input type="password" class="form-control" required [(ngModel)]="formData.password" name="formData[password]" #passwordNG="ngModel" placeholder="{{transServ._('Mật khẩu')}}">
               <span class="input-group-addon">
                 <span class="glyphicon glyphicon-asterisk text-danger"></span>
               </span>
             </div>
             <div [hidden]="passwordNG.valid || passwordNG.pristine"  class="alert alert-xs alert-danger">
-              <small>{{_tranServ._('Mật khẩu là bắt buộc!')}}</small>
+              <small>{{transServ._('Mật khẩu là bắt buộc!')}}</small>
             </div>
           </div>
           <div class="form-group">
             <!--<label for="remember">
               <input id="remember" type="checkbox" [(ngModel)]="formData.remember" name="formData[remember]">
-              {{_tranServ._('Ghi nhớ đăng nhập?')}}
+              {{transServ._('Ghi nhớ đăng nhập?')}}
             </label>-->
             <div class="clearfix text-right">
               <button type="submit" class="btn btn-default btn-sm shadow-br-3">
                 <span class="glyphicon glyphicon-log-in"></span>
-                {{_tranServ._('Đăng nhập')}}
+                {{transServ._('Đăng nhập')}}
               </button>
             </div>
           </div>

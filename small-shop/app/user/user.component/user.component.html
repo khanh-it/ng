@@ -1,1 +1,135 @@
 <router-outlet></router-outlet>
+<!-- panel -->
+<div class="panel panel-default">
+  <!-- panel-heading -->
+  <div class="panel-heading">
+    <h3 class="panel-title">{{transServ._('Quản lý tài khoản')}}</h3>
+  </div>
+  <!-- end#panel-heading -->
+  <!-- panel-body -->
+  <div class="panel-body">
+
+    <!-- Action: list of users -->
+    <div class="row" *ngIf="isActionList()">
+      <div class="col-xs-12 text-right">
+        <a href="#" (click)="actionAddNew(); $event.preventDefault();">
+          <i class="glyphicon glyphicon-plus"></i> {{transServ._('Thêm tài khoản mới')}}
+        </a>
+      </div>
+    	<div class="media col-xs-12 col-sm-4" *ngFor="let user of users">
+        <app-user-small-box-info [user]="user" (onUserSelected)="selectUser($event); actionFeatures()"></app-user-small-box-info>
+    	</div>
+    </div><!-- end#Action: list of users -->
+
+    <!-- Action: add new user -->
+    <form class="col-xs-12 col-sm-push-2 col-sm-8" *ngIf="isActionAddNew()" #formAddNewNG="ngForm" #formAddNewEle (ngSubmit)="onFormSubmit_addNew(formAddNewNG, formAddNewEle)">
+      <div class="form-group">
+        <label for="username">{{transServ._('Tên đăng nhập')}}</label>
+        <div class="input-group shadow-br-3">
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-user"></span>
+          </span>
+          <input type="text" id="username" class="form-control" required [(ngModel)]="formData.username" name="formData[username]" #usernameNG="ngModel" placeholder="{{transServ._('Tên đăng nhập')}}">
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-asterisk text-danger"></span>
+          </span>
+        </div>
+        <div [hidden]="usernameNG.valid || usernameNG.pristine"  class="alert alert-xs alert-danger">
+          <small>{{transServ._('Tên đăng nhập là bắt buộc!')}}</small>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="username">{{transServ._('Tên đăng nhập')}}</label>
+        <div class="input-group shadow-br-3">
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-user"></span>
+          </span>
+          <input type="text" id="username" class="form-control" required [(ngModel)]="formData.username" name="formData[username]" #usernameNG="ngModel" placeholder="{{transServ._('Tên đăng nhập')}}">
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-asterisk text-danger"></span>
+          </span>
+        </div>
+        <div [hidden]="usernameNG.valid || usernameNG.pristine"  class="alert alert-xs alert-danger">
+          <small>{{transServ._('Tên đăng nhập là bắt buộc!')}}</small>
+        </div>
+      </div>
+      <div class="form-group text-right">
+        <button class="btn btn-sm btn-default">{{transServ._('Lưu')}}</button>&nbsp;
+        <a href="#" class="btn btn-sm btn-default" (click)="actionList(); $event.preventDefault();">{{transServ._('Hủy')}}</a>
+      </div>
+    </form>
+
+    <!-- Action: features -->
+    <form class="clearfix container form-manage-user" *ngIf="isActionFeatures()">
+      <div class="row">
+        <!-- user info box -->
+        <div class="col-xs-12 col-sm-4">
+          <app-user-small-box-info [user]="selectedUser" [isActive]="true"></app-user-small-box-info>
+        </div>
+        <!-- end#user info box -->
+        <!-- links -->
+        <div class="col-xs-12 col-sm-8">
+          <ul class="col-xs-12 list-unstyled">
+            <li>
+              <a href="#" (click)="actionChangeFullname(); $event.preventDefault()">
+                <i class="glyphicon glyphicon-minus"></i>
+                {{transServ._('Thay đổi họ tên tài khoản.')}}
+              </a>
+            </li>
+            <li>
+              <a href="#" (click)="actionChangePassword(); $event.preventDefault()">
+                <i class="glyphicon glyphicon-minus"></i>
+                {{transServ._('Thay đổi mật khẩu.')}}
+              </a>
+            </li>
+            <li>
+              <a href="#" (click)="actionChangeType(); $event.preventDefault()">
+                <i class="glyphicon glyphicon-minus"></i>
+                {{transServ._('Thay đổi loại tài khoản.')}}
+              </a>
+            </li>
+            <li>
+              <a href="#" (click)="actionChangeImage(); $event.preventDefault()">
+                <i class="glyphicon glyphicon-minus"></i>
+                {{transServ._('Thay đổi ảnh đại diện.')}}
+              </a>
+            </li>
+            <li>
+              <br/><a href="#" (click)="actionList(); $event.preventDefault();">
+                <i class="glyphicon glyphicon-circle-arrow-left"></i>
+                {{transServ._('Trở lại.')}}
+              </a>
+            </li>
+          </ul>
+        </div>
+        <!-- end#links -->
+      </div>
+    </form>
+    <!-- end#Action: features -->
+
+
+    <!-- Action: change user fullname -->
+    <form class="col-xs-12 col-sm-push-2 col-sm-8" *ngIf="isActionChangeFullname()" #formChangeFullnameNG="ngForm" #formChangeFullnameEle (ngSubmit)="onFormSubmit(formChangeFullnameNG, formChangeFullnameEle)">
+      <app-user-small-box-info [user]="selectedUser" [isActive]="true"></app-user-small-box-info>
+      <div class="form-group">
+        <input type="text" maxlength="250" class="form-control shadow-br-3" [(ngModel)]="formData.fullname" name="formData[fullname]" placeholder="{{transServ._('Nhập họ và tên tài khoản mới')}}">
+      </div>
+      <div class="form-group text-right">
+        <button class="btn btn-sm btn-default">{{transServ._('Lưu')}}</button>&nbsp;
+        <a href="#" class="btn btn-sm btn-default" (click)="actionFeatures(); $event.preventDefault();">{{transServ._('Hủy')}}</a>
+      </div>
+    </form>
+    <!-- end#Action: change user fullname -->
+
+
+
+
+
+
+  </div>
+  <!-- end#panel-body -->
+  <!-- panel-footer -->
+  <div class="panel-footer"></div>
+  <!-- end#panel-footer -->
+</div>
+<!-- end#panel -->

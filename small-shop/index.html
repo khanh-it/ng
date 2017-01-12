@@ -1,7 +1,7 @@
 <html>
   <head>
     <title>Small Shop</title>
-    <base href="/">
+    <base href="./index.html">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- BootstrapCSS -->
@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="styles.css">
 
     <!-- 1. Load libraries -->
+    <!-- Fix electron : Insert this line above script imports  -->
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
     <!-- jQuery -->
     <script src="node_modules/jquery/dist/jquery.js"></script>
     <!-- BootstrapCSS -->
@@ -31,6 +33,8 @@
         console.error(err);
       });
     </script>
+    <!-- Fix electron : Insert this line after script imports -->
+    <script>if (window.module) module = window.module;</script>
   </head>
   <!-- 3. Display the application -->
   <body class="clearfix">

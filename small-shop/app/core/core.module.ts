@@ -71,6 +71,8 @@ export class CoreModule {
     if (parentModule) {
       throw new Error('CoreModule is already loaded. Import it in the AppModule only');
     }
+    //
+    this._authCheckServ.setIgnores(app_config['auth-service'].ignores);
     // Initilize
     this.init();
   }

@@ -1247,15 +1247,15 @@ declare module pouchdb {
     }
 
     /** Static-side interface for PouchDB */
-    export interface PouchDB {
-        /** Error helpers */
-        Errors: api.StandardErrors;
-    }
+    //export interface PouchDB {
+    //    /** Error helpers */
+    //    Errors: api.StandardErrors;
+    //}
     /**
      * The main pouchDB entry point. The constructors here will return either a
      * Callback or Promise pattern api.
      */
-    export interface PouchDB {
+    export interface PouchDB extends api.db.Callback {
         //////////////////////////////  local db  /////////////////////////////
         /**
          * Creates a new local pouchDb with the name specified and
@@ -1263,7 +1263,7 @@ declare module pouchdb {
          * @param name the database name
          * @returns a thenable.PouchDB
          */
-        new (name: string): thenable.PouchDB;
+        new (name: string): PouchDB;
         /**
          * Creates a new local pouchDb with the name specified and
          * all the default options
@@ -1271,7 +1271,7 @@ declare module pouchdb {
          * @param callback a callback to handle success/error
          * @returns a new PouchDB
          */
-        new (name: string, callback?: async.Callback<callback.PouchDB>): callback.PouchDB;
+        new (name: string, callback?: async.Callback<callback.PouchDB>): PouchDB;
 
         // note: overload ordering is for ts overload selection
         ///////////////////////////  local sqlite db  /////////////////////////
@@ -1281,7 +1281,7 @@ declare module pouchdb {
          * @param options the SQlite database options
          * @returns a thenable.PouchDB
          */
-        new (name: string, options: options.ctor.LocalSQLiteDb): thenable.PouchDB;
+        new (name: string, options: options.ctor.LocalSQLiteDb): PouchDB;
         /**
          * Creates a new local SQLite pouchDb with the name and options provided
          * @param name the database name
@@ -1289,21 +1289,21 @@ declare module pouchdb {
          * @param callback a callback to handle success/error
          * @returns a new PouchDB
          */
-        new (name: string, options: options.ctor.LocalSQLiteDb, callback: async.Callback<callback.PouchDB>): callback.PouchDB;
+        new (name: string, options: options.ctor.LocalSQLiteDb, callback: async.Callback<callback.PouchDB>): PouchDB;
 
         /**
          * Creates a new local SQLite pouchDb with the options provided
          * @param options the SQlite database options, including the name
          * @returns a thenable.PouchDB
          */
-        new (options: options.ctor.LocalSQLiteDbWithName): thenable.PouchDB;
+        new (options: options.ctor.LocalSQLiteDbWithName): PouchDB;
         /**
          * Creates a new local SQLite pouchDb with the options provided
          * @param options the SQlite database options, including the name
          * @param callback a callback to handle success/error
          * @returns a new PouchDB
          */
-        new (options: options.ctor.LocalSQLiteDbWithName, callback: async.Callback<callback.PouchDB>): callback.PouchDB;
+        new (options: options.ctor.LocalSQLiteDbWithName, callback: async.Callback<callback.PouchDB>): PouchDB;
 
         /////////////////////////// local websql db ///////////////////////////
         /**
@@ -1312,7 +1312,7 @@ declare module pouchdb {
          * @param options An object that specifies the local database options
          * @returns a thenable.PouchDB
          */
-        new (name: string, options: options.ctor.LocalWebSQLDb): thenable.PouchDB;
+        new (name: string, options: options.ctor.LocalWebSQLDb): PouchDB;
         /**
          * Creates a new local WebSQL pouchDb with the name and options provided
          * @param name A string value that specifies the database name
@@ -1320,21 +1320,21 @@ declare module pouchdb {
          * @param callback a callback to handle success/error
          * @returns a new PouchDB
          */
-        new (name: string, options: options.ctor.LocalWebSQLDb, callback: async.Callback<callback.PouchDB>): callback.PouchDB;
+        new (name: string, options: options.ctor.LocalWebSQLDb, callback: async.Callback<callback.PouchDB>): PouchDB;
 
         /**
          * Creates a new local WebSQL pouchDb with the options provided
          * @param options An object that specifies the local database options
          * @returns a thenable.PouchDB
          */
-        new (options: options.ctor.LocalWebSQLDbWithName): thenable.PouchDB;
+        new (options: options.ctor.LocalWebSQLDbWithName): PouchDB;
         /**
          * Creates a new local WebSQL pouchDb with the options provided
          * @param options An object that specifies the local database options
          * @param callback a callback to handle success/error
          * @returns a new PouchDB
          */
-        new (options: options.ctor.LocalWebSQLDbWithName, callback: async.Callback<callback.PouchDB>): callback.PouchDB;
+        new (options: options.ctor.LocalWebSQLDbWithName, callback: async.Callback<callback.PouchDB>): PouchDB;
 
         //////////////////////////////  local db  /////////////////////////////
         /**
@@ -1343,7 +1343,7 @@ declare module pouchdb {
          * @param options the local database options
          * @returns a thenable.PouchDB
          */
-        new (name: string, options: options.ctor.LocalDb): thenable.PouchDB;
+        new (name: string, options: options.ctor.LocalDb): PouchDB;
         /**
          * Creates a new local pouchDb with the name and options provided
          * @param name the database name
@@ -1351,21 +1351,21 @@ declare module pouchdb {
          * @param callback a callback to handle success/error
          * @returns a new PouchDB
          */
-        new (name: string, options: options.ctor.LocalDb, callback: async.Callback<callback.PouchDB>): callback.PouchDB;
+        new (name: string, options: options.ctor.LocalDb, callback: async.Callback<callback.PouchDB>): PouchDB;
 
         /**
          * Creates a new local pouchDb with the options provided
          * @param options the local database options, including the name
          * @returns a thenable.PouchDB
          */
-        new (options: options.ctor.LocalDbWithName): thenable.PouchDB;
+        new (options: options.ctor.LocalDbWithName): PouchDB;
         /**
          * Creates a new local pouchDb with the options provided
          * @param options the local database options, including the name
          * @param callback a callback to handle success/error
          * @returns a new PouchDB
          */
-        new (options: options.ctor.LocalDbWithName, callback: async.Callback<callback.PouchDB>): callback.PouchDB;
+        new (options: options.ctor.LocalDbWithName, callback: async.Callback<callback.PouchDB>): PouchDB;
 
         //  And finally do an "any" overload so we don't restrict any options not done yet
         /**
@@ -1374,13 +1374,13 @@ declare module pouchdb {
          * to add/improve the necessary typed overload instead of `options: any`
          * @returns a thenable.PouchDB
          */
-        new (name: string, options: any): thenable.PouchDB;
+        new (name: string, options: any): PouchDB;
         /**
          * A fallback constructor if none of the typed constructors cover a use case
          * @todo if you find yourself using this, consider contributing a patch
          * to add/improve the necessary typed overload instead of `options: pouchdb.options.DbName`
          * @returns a thenable.PouchDB
          */
-        new (options: options.ctor.DbName): thenable.PouchDB;
+        new (options: options.ctor.DbName): PouchDB;
     }
 }
