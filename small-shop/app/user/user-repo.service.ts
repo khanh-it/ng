@@ -14,6 +14,11 @@ export class UserRepoService extends Core_UserRepoService {
     /*  */
   }
 
+  public insert(user:UserModel):Promise<any> {
+    let key = UserModel.getDDocName('UNIQ_username');
+    return this._dbS.putUniq(key, 'username', user);
+  }
+
   public update(user:UserModel):Promise<boolean> {
     return this._dbS.get(user.id())
       .then((doc) => {//user._rev = doc._rev;

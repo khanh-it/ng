@@ -46,13 +46,22 @@ export class UserModel extends AbstractModel {
   }  */
 
   /**  */
-  protected password:string;
+  public password:string;
   /**  */
   public selfEncodePassword():string {
     if (undefined !== this.password) {
       this.password = UserModel.encodePassword(this.password);
     }
     return this.password;
+  }
+  public isPasswordEmpty():boolean {
+    if (null === this.password
+        || undefined === this.password
+        || "d41d8cd98f00b204e9800998ecf8427e" == this.password
+    ) {
+      return true;
+    }
+    return false;
   }
   /**  */
   //public getPassword():string { return this.password; }
@@ -102,7 +111,7 @@ export class UserModel extends AbstractModel {
     this.admin = (UserModel.ADMIN_YES === data['admin'])
       ? data['admin'] : UserModel.ADMIN_NO
     ;
-    // 
+    //
     return this;
   }
 }

@@ -44,15 +44,7 @@ export class UserComponent implements OnInit {
 
   public static readonly ACT_LIST = 'list';
 
-  public static readonly ACT_FEATURES = 'features';
-
-  public static readonly ACT_CHANGE_FULLNAME = 'change_fullname';
-
-  public static readonly ACT_CHANGE_PASSWORD = 'change_password';
-
-  public static readonly ACT_CHANGE_TYPE = 'change_type';
-
-  public static readonly ACT_CHANGE_IMAGE = 'change_image';
+  public static readonly ACT_CHANGES = 'changes';
 
   public static readonly ACT_ADD_NEW = 'add_new';
 
@@ -62,20 +54,8 @@ export class UserComponent implements OnInit {
   public isActionList():boolean {
     return this.isAction(UserComponent.ACT_LIST);
   }
-  public isActionFeatures():boolean {
-    return !!(this.isAction(UserComponent.ACT_FEATURES) && this.selectedUser);
-  }
-  public isActionChangeFullname():boolean {
-    return !!(this.isAction(UserComponent.ACT_CHANGE_FULLNAME) && this.selectedUser);
-  }
-  public isActionChangePassword():boolean {
-    return !!(this.isAction(UserComponent.ACT_CHANGE_PASSWORD) && this.selectedUser);
-  }
-  public isActionChangeType():boolean {
-    return !!(this.isAction(UserComponent.ACT_CHANGE_TYPE) && this.selectedUser);
-  }
-  public isActionChangeImage():boolean {
-    return !!(this.isAction(UserComponent.ACT_CHANGE_IMAGE) && this.selectedUser);
+  public isActionChanges():boolean {
+    return !!(this.isAction(UserComponent.ACT_CHANGES) && this.selectedUser);
   }
   public isActionAddNew():boolean {
     return this.isAction(UserComponent.ACT_ADD_NEW);
@@ -84,31 +64,15 @@ export class UserComponent implements OnInit {
   public actionList():void {
     this.action = UserComponent.ACT_LIST;
   }
-  public actionFeatures():void {
-    this.action = UserComponent.ACT_FEATURES;
-  }
-  public actionChangeFullname():void {
-    this.action = UserComponent.ACT_CHANGE_FULLNAME;
-  }
-  public actionChangePassword():void {
-    this.action = UserComponent.ACT_CHANGE_PASSWORD;
-  }
-  public actionChangeType():void {
-    this.action = UserComponent.ACT_CHANGE_TYPE;
-  }
-  public actionChangeImage():void {
-    this.action = UserComponent.ACT_CHANGE_IMAGE;
+  public actionChanges():void {
+    this.action = UserComponent.ACT_CHANGES;
   }
   public actionAddNew():void {
     this.action = UserComponent.ACT_ADD_NEW;
   }
 
   ngOnInit() {
-    this._userRepoServ.getAllUsers()
-      .then(users => {
-        this.users = users;
-      })
-    ;
+    
   }
 
   public selectUser(user:UserModel):void {
@@ -119,39 +83,5 @@ export class UserComponent implements OnInit {
   public getUserImgBase64(user:UserModel):SafeResourceUrl {
     let url = this._sanitizer.bypassSecurityTrustResourceUrl(user.getImgBase64());
     return url;
-  }
-
-  public onFormSubmit_addNew():any {
-
-  }
-
-  public onFormSubmit():any {
-    let user = this.selectedUser;
-    if (!user) {
-      this._dialogComp.alert(this.transServ._('Chưa chọn tài khoản, không thể thực hiện.'));
-      this.actionList();
-    } else {
-      // Case: change user fullname
-      if (this.isActionChangeFullname()) {
-        let fullname = this.formData.fullname
-          ? ('' + this.formData.fullname).trim()
-          : user.fullname
-        ;
-        ((user.fullname != fullname && fullname) && (user.fullname = fullname)
-          ? this._userRepoServ.update(user)
-          : Promise.resolve()
-        ).then(() => { this.actionFeatures(); });
-
-      // Case: change user password
-      } else if (this.isActionChangePassword()) {
-
-      // Case: change user type
-      } else if (this.isActionChangeType()) {
-
-        // Case: change user image
-      } else if (this.isActionChangeImage()) {
-
-      }
-    }
   }
 }

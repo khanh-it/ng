@@ -11,12 +11,12 @@ import {
 /* component(s) */
 /* --- User */
 import { UserComponent } from './user.component/user.component';
+import { UserCudComponent } from './user-cud.component/user-cud.component'
 
 /* Services */
 
 const routes: Routes = [
 /* user */
-  //{ path: 'user', redirectTo: 'user/list', pathMatch: 'full'},
   { path: '', component: UserComponent, data: {},
     children: [
       {
@@ -26,7 +26,8 @@ const routes: Routes = [
           //{ path: 'detail/:id', component: UserDetailComponent, data: {} },
           //{ path: '', component: UserListComponent }
         ]
-      }
+      },
+      { path: 'addnew', component: UserCudComponent},
     ]
   },
 /* #end.user */

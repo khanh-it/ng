@@ -23,7 +23,7 @@ import { UserModel } from '../user.model';
   styleUrls: [ 'user-small-box-info.css' ],
   //providers: [ ],
 })
-export class UserSmallBoxInfo implements OnInit {
+export class UserSmallBoxInfoComponent implements OnInit {
 
   @Input() public isActive:boolean = false;
 

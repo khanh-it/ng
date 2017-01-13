@@ -19,17 +19,20 @@ body{
   -moz-box-shadow: 3px 3px 6px silver;
   -webkit-box-shadow: 3px 3px 6px silver;
   -o-box-shadow: 3px 3px 6px silver;
+  margin-bottom: 6px;
 }
 .shadow-br-6{
   box-shadow: 6px 6px 12px silver;
   -moz-box-shadow: 6px 6px 12px silver;
   -webkit-box-shadow: 6px 6px 12px silver;
   -o-box-shadow: 6px 6px 12px silver;
+  margin-bottom: 12px;
 }
 .shadow-br-12{
   box-shadow: 12px 12px 24px silver;
   -moz-box-shadow: 12px 12px 24px silver;
   -webkit-box-shadow: 12px 12px 24px silver;
   -o-box-shadow: 12px 12px 24px silver;
+  margin-bottom: 24px;
 }
 /* .end#Master Styles */

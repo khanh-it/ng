@@ -5,6 +5,6 @@
   <span class="media-body">
     <span class="media-heading">{{user.fullname}} [{{user.username}}]</span><br/>
     <small>{{transServ._(user.admin ? 'Tài khoản quản trị' : 'Tài khoản thường')}}</small><br/>
-    <small>{{transServ._(user.password ? 'Đã nhập mật khẩu' : 'Chưa nhập mật khẩu')}}</small>
+    <small>{{transServ._(!user.isPasswordEmpty() ? 'Đã nhập mật khẩu' : 'Chưa nhập mật khẩu')}}</small>
   </span>
 </a>

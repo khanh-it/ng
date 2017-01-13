@@ -7,7 +7,12 @@ export class TranslatorService {
   public constructor () {}
 
   /** Translate */
-  public _(txt:string):string {
+  public _(txt:string, data?:any):string {
+    if (data) {
+      for (let prop in data) {
+        txt = txt.replace('%' + ('' + prop) + '%', '' + data[prop]);
+      }
+    }
     return txt;
   }
 }

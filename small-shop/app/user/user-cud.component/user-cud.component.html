@@ -1,0 +1,73 @@
+<form *ngIf="!!user" class="col-xs-12 col-sm-push-2 col-sm-8" #formCudNG="ngForm" #formCudEle (ngSubmit)="onFormSubmit(formCudNG, formCudEle)">
+  <!-- user's fullname -->
+  <div class="form-group">
+    <label for="fullname">{{transServ._('Họ và tên')}}</label>
+    <div class="input-group shadow-br-3">
+      <span class="input-group-addon"></span>
+      <input type="text" class="form-control" required [(ngModel)]="user.fullname" name="user[fullname]" #userFullnameNG="ngModel" placeholder="{{transServ._('Họ và tên')}}">
+      <span class="input-group-addon">
+        <span class="glyphicon glyphicon-asterisk text-danger"></span>
+      </span>
+    </div>
+    <div [hidden]="userFullnameNG.valid || userFullnameNG.pristine"  class="alert alert-xs alert-danger">
+      <small>{{transServ._('Họ và tên là bắt buộc!')}}</small>
+    </div>
+  </div><!-- end#user's fullname -->
+  <!-- user's username -->
+  <div class="form-group">
+    <label for="username">{{transServ._('Tên đăng nhập')}}</label>
+    <div class="input-group shadow-br-3">
+      <span class="input-group-addon"></span>
+      <input type="text" class="form-control" required [(ngModel)]="user.username" name="user[username]" #userUsernameNG="ngModel" placeholder="{{transServ._('Tên đăng nhập')}}">
+      <span class="input-group-addon">
+        <span class="glyphicon glyphicon-asterisk text-danger"></span>
+      </span>
+    </div>
+    <div [hidden]="userUsernameNG.valid || userUsernameNG.pristine"  class="alert alert-xs alert-danger">
+      <small>{{transServ._('Tên đăng nhập là bắt buộc!')}}</small>
+    </div>
+  </div><!-- end#user's username -->
+  <!-- user's password -->
+  <div class="form-group">
+    <label for="password">{{transServ._('Mật khẩu')}}</label>
+    <div class="input-group shadow-br-3">
+      <span class="input-group-addon"></span>
+      <input type="password" class="form-control" minlength="6" maxlength="50" (ngModel)="user.password" name="user[password]" #userPasswordNG="ngModel" #userPassword placeholder="{{transServ._('Mật khẩu')}}">
+      <span class="input-group-addon">
+        <label class="control-label">
+          <input type="checkbox" (click)="$event.target.checked ? (userPassword.type = 'text') : (userPassword.type = 'password');" >
+          <small>{{transServ._('Hiển thị?')}}</small>
+        </label>
+      </span>
+    </div>
+    <p>
+      <small>{{transServ._('Chiều dài mật khẩu tối thiểu: %minln%, tối đa: %maxln%.', {'minln': userPassword.minLength, 'maxln': userPassword.maxLength})}}</small>
+    </p>
+  </div><!-- end#user's password -->
+  <!-- user's type -->
+  <div class="form-group">
+    <label>{{transServ._('Loại tài khoản')}}</label>
+    <p class="clearfix">
+      <label class="control-label">
+        <input type="radio" class="" [(ngModel)]="user.admin" [value]="0" name="user[admin]" #userTypeNormalNG="ngModel">
+        <small>{{transServ._('Tài khoản thường')}}</small>
+      </label><br/>
+      <span>&nbsp;&nbsp;&nbsp;{{transServ._('Thông tin về loại tài khoản thường')}}</span>
+    </p>
+    <p class="clearfix">
+      <label class="control-label">
+        <input type="radio" class="" [(ngModel)]="user.admin" [value]="1" name="user[admin]" #userTypeAdminNG="ngModel">
+        <small>{{transServ._('Tài khoản quản trị')}}</small>
+      </label><br/>
+      <span>&nbsp;&nbsp;&nbsp;{{transServ._('Thông tin về loại tài khoản quản trị')}}</span>
+    </p>
+  </div><!-- end#user's type -->
+  <div class="form-group text-right">
+    <button class="btn btn-sm btn-default">
+      <i class="glyphicon glyphicon-floppy-disk"></i> {{transServ._('Lưu')}}
+    </button>&nbsp;
+    <a href="#" class="btn btn-sm btn-default" (click)="onCancel(); $event.preventDefault();">
+      <i class="glyphicon glyphicon-floppy-remove"></i> {{transServ._('Hủy')}}
+    </a>
+  </div>
+</form>
