@@ -1,6 +1,9 @@
 import {
   Component,
-  OnInit
+  OnInit,
+  Input,
+  Output,
+  EventEmitter
 } from '@angular/core';
 /*import {
   DomSanitizer,
@@ -31,6 +34,8 @@ export class UserListComponent implements OnInit {
     protected _sanitizer: DomSanitizer*/
   ) {}
 
+  @Output() public onUserSelected:EventEmitter<UserModel> = new EventEmitter<UserModel>();
+
   public selectedUser:UserModel;
 
   public users:UserModel[] = [];
@@ -38,5 +43,9 @@ export class UserListComponent implements OnInit {
   public ngOnInit() {
     // Refresh list of users...
     this._userRepoServ.getAllUsers().then(users => this.users = users);
+  }
+
+  public selectUser(user:UserModel):void {
+    this.onUserSelected.emit(this.selectedUser = user);
   }
 }

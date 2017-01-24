@@ -1,6 +1,7 @@
 "use strict";
 var AbstractModel = (function () {
     function AbstractModel(data) {
+        this._attachments = [];
         data = AbstractModel.isPlainObject(data) ? data : {};
         this.TBL = data.TBL = '' + (data.TBL ? data.TBL
             : Object.getPrototypeOf(this).constructor.TABLE_NAME);

@@ -23,11 +23,8 @@ import { UserRepoService } from '../user-repo.service';
 })
 export class NavComponent implements OnInit {
 
-  /** */
-  public isOpen:boolean = true;
-
   /** Logged user data? */
-  protected _user:any;
+  public user:any;
 
   constructor(
     public transServ: TranslatorService,
@@ -36,8 +33,8 @@ export class NavComponent implements OnInit {
 
   ngOnInit() {
     //
-    this._userRepoServ.getLoggedInUser().then((user:any) => {
-      this._user = user;
-    });
+    let loggedUserChangesHandler = (user:any) => { this.user = user; };
+    this._userRepoServ.events.loggedUserChanges.subscribe(loggedUserChangesHandler);
+    this._userRepoServ.getLoggedInUser().then(loggedUserChangesHandler);
   }
 }

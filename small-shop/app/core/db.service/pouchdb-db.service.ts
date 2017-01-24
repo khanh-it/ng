@@ -58,7 +58,7 @@ export class PouchdbDbService extends AbstractDbService {
   public get(docID:string):Promise<any> {
     return new Promise((rs, rj) => {
       this._db
-        .get(docID, {include_docs: true})
+        .get(docID, {include_docs: true, attachments: true})
         .then((doc:any) => { rs(doc); })
         .catch(() => { rs(null); })
       ;

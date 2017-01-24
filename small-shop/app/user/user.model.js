@@ -10,14 +10,20 @@ var UserModel = (function (_super) {
     function UserModel() {
         return _super.apply(this, arguments) || this;
     }
+    UserModel.prototype.setImg = function (img) {
+        this.img = img;
+    };
+    UserModel.prototype.getImg = function () {
+        return this.img;
+    };
     UserModel.prototype.getImgBase64 = function () {
-        return this.img
-            ? ('data:image/png;base64,' + this.img)
+        return (this.img instanceof File)
+            ? window.URL.createObjectURL(this.img)
             : UserModel.IMG;
     };
     UserModel.prototype.init = function (data) {
         _super.prototype.init.call(this, data);
-        this.img = data['img'] ? ('' + data['img']) : '';
+        this.img = data['img'] ? data['img'] : null;
         return this;
     };
     return UserModel;

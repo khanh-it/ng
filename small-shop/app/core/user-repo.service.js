@@ -23,6 +23,9 @@ var UserRepoService = UserRepoService_1 = (function (_super) {
         var _this = _super.call(this, _dbS) || this;
         _this._dbS = _dbS;
         _this._users = [];
+        _this.events = {
+            'loggedUserChanges': new core_1.EventEmitter()
+        };
         return _this;
     }
     UserRepoService.prototype.init = function () {
@@ -62,6 +65,7 @@ var UserRepoService = UserRepoService_1 = (function (_super) {
     UserRepoService.prototype.setLoggedInUser = function (user) {
         this._loggedInUser = user;
         this._loggedInUserID(user && user._id);
+        this.events.loggedUserChanges.emit(user);
         return this;
     };
     UserRepoService.prototype.getUser4Login = function (username, password, autoStoreWhenSuccess) {

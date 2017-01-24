@@ -10,12 +10,14 @@
   <div class="panel-body">
 
     <!-- Action: list of users -->
-    <div class="col-xs-12 text-right">
-      <a href="#" (click)="actionAddNew(); $event.preventDefault();" class="btn btn-default btn-sm">
-        <i class="glyphicon glyphicon-plus"></i> {{transServ._('Thêm tài khoản mới')}}
-      </a>
+    <div *ngIf="isActionList()" class="clearfix">
+      <div class="text-right">
+        <a href="#" (click)="actionAddNew(); $event.preventDefault();" class="btn btn-default btn-sm">
+          <i class="glyphicon glyphicon-plus"></i> {{transServ._('Thêm tài khoản mới')}}
+        </a>
+      </div>
+      <app-user-list (onUserSelected)="selectUser($event); actionChanges()"></app-user-list>
     </div>
-    <app-user-list *ngIf="isActionList()"></app-user-list>
     <!-- end#Action: list of users -->
 
     <!-- Action: add new user -->
@@ -23,7 +25,7 @@
     <!-- end#Action: add new user -->
 
     <!-- Action: user changes -->
-    <app-user-changes></app-user-changes>
+    <app-user-changes *ngIf="isActionChanges()" [user]="selectedUser" (onCanceled)="actionList();"></app-user-changes>
     <!-- end#Action: user changes -->
 
   </div>

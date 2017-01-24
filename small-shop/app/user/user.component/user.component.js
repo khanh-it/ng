@@ -19,10 +19,6 @@ var UserComponent = UserComponent_1 = (function () {
         this._dialogComp = _dialogComp;
         this._userRepoServ = _userRepoServ;
         this._sanitizer = _sanitizer;
-        this.formData = {
-            'fullname': '',
-            'password': ''
-        };
         this.users = [];
         this.action = UserComponent_1.ACT_LIST;
     }

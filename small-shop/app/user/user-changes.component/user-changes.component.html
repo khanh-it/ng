@@ -1,14 +1,16 @@
-<!-- Action: features -->
-<form class="clearfix container form-manage-user" *ngIf="isActionFeatures()">
+
+<div class="clearfix container">
   <div class="row">
-    <!-- user info box -->
     <div class="col-xs-12 col-sm-4">
-      <app-user-small-box-info [user]="selectedUser" [isActive]="true"></app-user-small-box-info>
+      <!-- user info box -->
+      <div class="clearfix shadow-br-3">
+        <app-user-small-box-info [user]="user" [isActive]="true"></app-user-small-box-info>
+      </div>
+      <!-- end#user info box -->
     </div>
-    <!-- end#user info box -->
-    <!-- links -->
     <div class="col-xs-12 col-sm-8">
-      <ul class="col-xs-12 list-unstyled">
+      <!-- Action: features -->
+      <ul class="col-xs-12 list-unstyled" *ngIf="isActionFeatures();">
         <li>
           <a href="#" (click)="actionChangeFullname(); $event.preventDefault()">
             <i class="glyphicon glyphicon-minus"></i>
@@ -40,21 +42,116 @@
           </a>
         </li>
       </ul>
-    </div>
-    <!-- end#links -->
-  </div>
-</form>
-<!-- end#Action: features -->
+      <!-- end#Action: features -->
 
-<!-- Action: change user fullname -->
-<form class="col-xs-12 col-sm-push-2 col-sm-8" *ngIf="isActionChangeFullname()" #formChangeFullnameNG="ngForm" #formChangeFullnameEle (ngSubmit)="onFormSubmit(formChangeFullnameNG, formChangeFullnameEle)">
-  <app-user-small-box-info [user]="selectedUser" [isActive]="true"></app-user-small-box-info>
-  <div class="form-group">
-    <input type="text" maxlength="250" class="form-control shadow-br-3" [(ngModel)]="formData.fullname" name="formData[fullname]" placeholder="{{transServ._('Nhập họ và tên tài khoản mới')}}">
+      <!-- Action: change user type -->
+      <form *ngIf="isActionChangeFullname()" #formChangeFullnameNG="ngForm" #formChangeFullnameEle (ngSubmit)="onFormSubmit_changeFullname(formChangeFullnameNG, formChangeFullnameEle)">
+        <div class="form-group">
+          <div class="input-group shadow-br-3" style="width:100%;">
+            <span class="input-group-addon"></span>
+            <input type="text" maxlength="250" class="form-control" [(ngModel)]="formData.fullname" name="formData[fullname]" placeholder="{{transServ._('Nhập họ và tên tài khoản mới')}}">
+          </div>
+        </div>
+        <div class="form-group text-right">
+          <button class="btn btn-sm btn-default">
+            <i class="glyphicon glyphicon-floppy-disk"></i> {{transServ._('Lưu')}}
+          </button>&nbsp;
+          <a href="#" class="btn btn-sm btn-default" (click)="actionFeatures(); $event.preventDefault();">
+            <i class="glyphicon glyphicon-floppy-remove"></i> {{transServ._('Hủy')}}
+          </a>
+        </div>
+      </form>
+      <!-- end#Action: change user fullname -->
+
+      <!-- Action: change user password -->
+      <form  *ngIf="isActionChangePassword()" #formChangePasswordNG="ngForm" #formChangePasswordEle (ngSubmit)="onFormSubmit_changePassword(formChangePasswordNG, formChangePasswordEle)">
+        <div class="form-group">
+          <div class="input-group shadow-br-3" style="width:100%;">
+            <span class="input-group-addon"></span>
+            <input type="password" maxlength="50" class="form-control" [(ngModel)]="formData.old_password" name="formData[old_password]" placeholder="{{transServ._('Mật khẩu hiện tại')}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group shadow-br-3" style="width:100%;">
+            <span class="input-group-addon"></span>
+            <input type="password" minlength="6" maxlength="50" #userPassword class="form-control" [(ngModel)]="formData.password" name="formData[password]" placeholder="{{transServ._('Mật khẩu mới')}}">
+          </div>
+          <p>
+            <small>{{transServ._('Chiều dài mật khẩu tối thiểu: %minln%, tối đa: %maxln%.', {'minln': userPassword.minLength, 'maxln': userPassword.maxLength})}}</small>
+          </p>
+        </div>
+        <div class="form-group">
+          <div class="input-group shadow-br-3" style="width:100%;">
+            <span class="input-group-addon"></span>
+            <input type="password" minlength="6" maxlength="50" #userPasswordConfirm class="form-control" [(ngModel)]="formData.password_confirm" name="formData[password_confirm]" placeholder="{{transServ._('Xác nhận mật khẩu mới')}}">
+          </div>
+          <p>
+            <small>{{transServ._('Chiều dài mật khẩu tối thiểu: %minln%, tối đa: %maxln%.', {'minln': userPasswordConfirm.minLength, 'maxln': userPasswordConfirm.maxLength})}}</small>
+          </p>
+        </div>
+        <div class="form-group text-right">
+          <button class="btn btn-sm btn-default">
+            <i class="glyphicon glyphicon-floppy-disk"></i> {{transServ._('Đổi mật khẩu')}}
+          </button>&nbsp;
+          <a href="#" class="btn btn-sm btn-default" (click)="actionFeatures(); $event.preventDefault();">
+            <i class="glyphicon glyphicon-floppy-remove"></i> {{transServ._('Hủy')}}
+          </a>
+        </div>
+      </form>
+      <!-- end#Action: change user password -->
+
+      <!-- Action: change user admin? -->
+      <form *ngIf="isActionChangeType()" #formChangeTypeNG="ngForm" #formChangeTypeEle (ngSubmit)="onFormSubmit_changeType(formChangeTypeNG, formChangeTypeEle)">
+        <div class="form-group">
+          <label>{{transServ._('Loại tài khoản')}}</label>
+          <p class="clearfix">
+            <label class="control-label">
+              <input type="radio" class="" [(ngModel)]="formData.admin" [value]="0" name="formData[admin]" #userTypeNormalNG="ngModel">
+              <small>{{transServ._('Tài khoản thường')}}</small>
+            </label><br/>
+            <span>&nbsp;&nbsp;&nbsp;{{transServ._('Thông tin về loại tài khoản thường')}}</span>
+          </p>
+          <p class="clearfix">
+            <label class="control-label">
+              <input type="radio" class="" [(ngModel)]="formData.admin" [value]="1" name="formData[admin]" #userTypeAdminNG="ngModel">
+              <small>{{transServ._('Tài khoản quản trị')}}</small>
+            </label><br/>
+            <span>&nbsp;&nbsp;&nbsp;{{transServ._('Thông tin về loại tài khoản quản trị')}}</span>
+          </p>
+        </div>
+        <div class="form-group text-right">
+          <button class="btn btn-sm btn-default">
+            <i class="glyphicon glyphicon-floppy-disk"></i> {{transServ._('Lưu')}}
+          </button>&nbsp;
+          <a href="#" class="btn btn-sm btn-default" (click)="actionFeatures(); $event.preventDefault();">
+            <i class="glyphicon glyphicon-floppy-remove"></i> {{transServ._('Hủy')}}
+          </a>
+        </div>
+      </form>
+      <!-- end#Action: change user admin? -->
+
+      <!-- Action: change user image -->
+      <form *ngIf="isActionChangeImage()" #formChangeImageNG="ngForm" #formChangeImageEle (ngSubmit)="onFormSubmit_changeImage(usrImgEle)">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon"></span>
+            <input #usrImgEle type="file" accept="image/*" class="form-control">
+            <a href="#" (click)="$event.preventDefault(); usrImgEle.click();" class="input-group-addon">
+              <span class="glyphicon glyphicon-upload"></span>
+            </a>
+          </div>
+        </div>
+        <div class="form-group text-right">
+          <button class="btn btn-sm btn-default">
+            <i class="glyphicon glyphicon-floppy-disk"></i> {{transServ._('Lưu')}}
+          </button>&nbsp;
+          <a href="#" class="btn btn-sm btn-default" (click)="actionFeatures(); $event.preventDefault();">
+            <i class="glyphicon glyphicon-floppy-remove"></i> {{transServ._('Hủy')}}
+          </a>
+        </div>
+      </form>
+      <!-- end#Action: change user image -->
+
+    </div>
   </div>
-  <div class="form-group text-right">
-    <button class="btn btn-sm btn-default">{{transServ._('Lưu')}}</button>&nbsp;
-    <a href="#" class="btn btn-sm btn-default" (click)="actionFeatures(); $event.preventDefault();">{{transServ._('Hủy')}}</a>
-  </div>
-</form>
-<!-- end#Action: change user fullname -->
+</div>

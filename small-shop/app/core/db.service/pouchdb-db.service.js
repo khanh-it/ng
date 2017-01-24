@@ -45,7 +45,7 @@ var PouchdbDbService = PouchdbDbService_1 = (function (_super) {
         var _this = this;
         return new Promise(function (rs, rj) {
             _this._db
-                .get(docID, { include_docs: true })
+                .get(docID, { include_docs: true, attachments: true })
                 .then(function (doc) { rs(doc); })
                 .catch(function () { rs(null); });
         });

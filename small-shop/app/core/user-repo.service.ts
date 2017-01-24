@@ -1,4 +1,7 @@
-import { Injectable } from '@angular/core';
+import {
+  Injectable,
+  EventEmitter
+} from '@angular/core';
 
 // Models
 import { UserModel } from './user.model';
@@ -25,6 +28,10 @@ export class UserRepoService extends AbstractRepoService {
    *
    */
   protected _loggedInUser:UserModel;
+
+  public events:any = {
+    'loggedUserChanges': new EventEmitter<any>()
+  };
 
   /***/
   public constructor(protected _dbS:PouchdbDbService) {
@@ -76,6 +83,9 @@ export class UserRepoService extends AbstractRepoService {
   public setLoggedInUser(user:UserModel|null):UserRepoService {
     this._loggedInUser = user;
     this._loggedInUserID(user && user._id);
+    // Trigger events
+    this.events.loggedUserChanges.emit(user);
+    // Return
     return this;
   }
 

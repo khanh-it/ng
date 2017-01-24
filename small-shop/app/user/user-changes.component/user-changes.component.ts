@@ -5,10 +5,10 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
-import {
+/*import {
   DomSanitizer,
   SafeResourceUrl
-} from '@angular/platform-browser';
+} from '@angular/platform-browser';*/
 
 // Services
 import { TranslatorService } from '../../core/translator.service';
@@ -30,8 +30,8 @@ export class UserChangesComponent implements OnInit {
   constructor(
     public transServ: TranslatorService,
     protected _dialogComp: DialogComponent,
-    protected _userRepoServ: UserRepoService,
-    protected _sanitizer: DomSanitizer
+    protected _userRepoServ: UserRepoService/*,
+    protected _sanitizer: DomSanitizer*/
   ) {}
 
   public action:string = UserChangesComponent.ACT_FEATURES;
@@ -46,28 +46,23 @@ export class UserChangesComponent implements OnInit {
 
   public static readonly ACT_CHANGE_IMAGE = 'change_image';
 
-  public static readonly ACT_ADD_NEW = 'add_new';
-
   public isAction(action:string):boolean {
-    return action == this.action;
+    return !!(('' + action == this.action) && this.user);
   }
   public isActionFeatures():boolean {
-    return !!(this.isAction(UserChangesComponent.ACT_FEATURES) && this.user);
+    return this.isAction(UserChangesComponent.ACT_FEATURES);
   }
   public isActionChangeFullname():boolean {
-    return !!(this.isAction(UserChangesComponent.ACT_CHANGE_FULLNAME) && this.user);
+    return this.isAction(UserChangesComponent.ACT_CHANGE_FULLNAME);
   }
   public isActionChangePassword():boolean {
-    return !!(this.isAction(UserChangesComponent.ACT_CHANGE_PASSWORD) && this.user);
+    return this.isAction(UserChangesComponent.ACT_CHANGE_PASSWORD);
   }
   public isActionChangeType():boolean {
-    return !!(this.isAction(UserChangesComponent.ACT_CHANGE_TYPE) && this.user);
+    return this.isAction(UserChangesComponent.ACT_CHANGE_TYPE);
   }
   public isActionChangeImage():boolean {
-    return !!(this.isAction(UserChangesComponent.ACT_CHANGE_IMAGE) && this.user);
-  }
-  public isActionAddNew():boolean {
-    return this.isAction(UserChangesComponent.ACT_ADD_NEW);
+    return this.isAction(UserChangesComponent.ACT_CHANGE_IMAGE);
   }
   public actionFeatures():void {
     this.action = UserChangesComponent.ACT_FEATURES;
@@ -80,12 +75,11 @@ export class UserChangesComponent implements OnInit {
   }
   public actionChangeType():void {
     this.action = UserChangesComponent.ACT_CHANGE_TYPE;
+    //
+    this.formData.admin = this.user.admin;
   }
   public actionChangeImage():void {
     this.action = UserChangesComponent.ACT_CHANGE_IMAGE;
-  }
-  public actionAddNew():void {
-    this.action = UserChangesComponent.ACT_ADD_NEW;
   }
 
   @Output() public onSucceeded:EventEmitter<UserModel>
@@ -107,51 +101,132 @@ export class UserChangesComponent implements OnInit {
 
   }
 
-  public onFormSubmit():void {
+  /** Placeholder for form data */
+  public formData:any = {
+    'fullname': '',
+    'old_password': '',
+    'password': '',
+    'password_confirm': '',
+    'admin': null
+  };
+
+  /**
+   * Change user's fullname
+   */
+  public onFormSubmit_changeFullname():void {
     let user = this.user;
-    (() => {
-      let rt;
+    user && (() => {
+      let rt = Promise.resolve();
       // Check data validation
-      if (!user.fullname
-          || !user.username
-          //|| !user.password
-          || (null === user.admin || undefined === user.admin)
-      ) {
-        rt = Promise.reject(new Error(this.transServ._('Vui lòng nhập đầy đủ thông tin để thực hiện.')));
-      } else {
-        // Format data;
-        // ---
-        user.selfEncodePassword();
-        // Insert new user data
-        rt = this._userRepoServ.insert(user);
+      let fullname = ('' + this.formData.fullname).trim();
+      if (fullname && (user.fullname != fullname)) {
+        // Format, set model data...
+        user.fullname = fullname;
+        // Update data
+        rt = this._userRepoServ.update(user);
       }
       // Return
       return rt;
-    })().then(
-      (rt) => {
-        // Inform
-        //this._dialogComp.alert('');
+    })().then((rt) => {
+        // Inform: this._dialogComp.alert('');
         // Reset form data
-        this.user = null;
-        setTimeout(() => {
-          // Reset form data
-          this.user = new UserModel();
-          // Emit event for parent components
-          this.onSucceeded.emit(this.user);
-        });
-      },
-      (err:Error) => {
-        let msg = err.message;
-        // Case: unique username?
-        if (msg.indexOf('UNIQ_username') >= 0) {
-          msg = this.transServ._('Tên đăng nhập đã được sử dụng không thể thực hiện.');
-        }
+        this.formData.fullname = '';
+      }, (err:Error) => {
         // Inform
-        this._dialogComp.alert(msg);
-        // Reprocedure error
-        this.onError.emit(err);
+        this._dialogComp.alert(err.message);
+      }
+    ).then(() => {
+      this.actionFeatures();
+    });
+  }
+
+  /**
+   * Change user's password
+   */
+  public onFormSubmit_changePassword():void {
+    let user = this.user;
+    user && (() => {
+      let rt = Promise.resolve();
+      // Check data validation
+      let old_password = UserModel.encodePassword('' + this.formData.old_password);
+      let password = ('' + this.formData.password).trim();
+      let password_confirm = ('' + this.formData.password_confirm).trim();
+      if (old_password != user.password) {
+          rt = Promise.reject(new Error('Mật khẩu hiện tại chưa đúng.'));
+      } else if (password != password_confirm) {
+        rt = Promise.reject(new Error('Mật khẩu mới không trùng khớp.'));
+      } else {
+        // Format, set model data...
+        user.password = password;
+        user.selfEncodePassword();
+        // Update data
+        rt = this._userRepoServ.update(user);
+      }
+      // Return
+      return rt;
+    })().then((rt) => {
+        // Inform: this._dialogComp.alert('');
+        // Reset form data
+        this.formData.old_password = this.formData.password = this.formData.password_confirm = '';
+        // Return
+        this.actionFeatures();
+      }, (err:Error) => {
+        // Inform
+        this._dialogComp.alert(this.transServ._(err.message));
       }
     );
+  }
+
+  /**
+   * Change user's password
+   */
+  public onFormSubmit_changeType():void {
+    let user = this.user;
+    user && (() => {
+      let rt = Promise.resolve();
+      // Check data validation
+      // ...
+      // Format, set model data...
+      user.setAdmin(this.formData.admin);
+      // Update data
+      rt = this._userRepoServ.update(user);
+      // Return
+      return rt;
+    })().then((rt) => {
+        // Inform: this._dialogComp.alert('');
+        // Reset form data
+        this.formData.admin = null;
+        // Return
+        this.actionFeatures();
+      }, (err:Error) => {
+        // Inform
+        this._dialogComp.alert(this.transServ._(err.message));
+      }
+    );
+  }
+
+  /**
+   * Change user's image
+   */
+  public onFormSubmit_changeImage(usrImgEle:HTMLInputElement):void {
+    // Cancel?
+    if (!usrImgEle.files.length) {
+      this.actionFeatures();
+    } else {
+      let usrImg:File = usrImgEle.files[0];
+      this._userRepoServ.changeImage(this.user, usrImg)
+        .then(() => {
+          this.actionFeatures();
+        })
+        .catch((e:Error) => {
+            this._dialogComp.alert(this.transServ._('Thay đổi ảnh đại diện không thành công. Err: ' + e.message));
+        })
+      ;
+    }
+  }
+
+  public deleteUser() {
+
   }
 
   public onCancel():void {

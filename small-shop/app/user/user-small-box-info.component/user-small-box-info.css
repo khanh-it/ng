@@ -10,5 +10,5 @@
   background-color: #d9edf7;
   border-color: #bce8f1;
 }
-img.user-img{border: 1px solid silver;}
+img.user-img{outline: 1px solid silver;max-width: 64px; max-height: 64px;}
 /* end#app/user/user.component/user-small-box-info.css */

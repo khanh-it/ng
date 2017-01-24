@@ -27,6 +27,9 @@ export abstract class AbstractModel {
   /** Revision */
   public _rev:string;
 
+  /** Attachments */
+  public _attachments:any[] = [];
+
   /** Initialize */
   protected static genIDStr() {
     return (new Date()).toISOString();

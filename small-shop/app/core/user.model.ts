@@ -94,6 +94,12 @@ export class UserModel extends AbstractModel {
   public static readonly ADMIN_NO:number = 0;
   /**  */
   public static readonly ADMIN_YES:number = 1;
+  /**  */
+  public setAdmin(admin:number):void {
+    this.admin = (UserModel.ADMIN_YES === admin)
+      ? admin : UserModel.ADMIN_NO
+    ;
+  }
 
   /** Initialize */
   protected init(data?:any):UserModel {
@@ -108,9 +114,7 @@ export class UserModel extends AbstractModel {
       ? data['active'] : UserModel.ACTIVE_YES
     ;
     /**  */
-    this.admin = (UserModel.ADMIN_YES === data['admin'])
-      ? data['admin'] : UserModel.ADMIN_NO
-    ;
+    this.setAdmin(data['admin']);
     //
     return this;
   }

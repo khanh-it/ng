@@ -9,42 +9,44 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var platform_browser_1 = require("@angular/platform-browser");
 var translator_service_1 = require("../../core/translator.service");
 var dialog_component_1 = require("../../core/dialog.component/dialog.component");
 var user_repo_service_1 = require("../user-repo.service");
 var user_model_1 = require("../user.model");
 var UserChangesComponent = UserChangesComponent_1 = (function () {
-    function UserChangesComponent(transServ, _dialogComp, _userRepoServ, _sanitizer) {
+    function UserChangesComponent(transServ, _dialogComp, _userRepoServ) {
         this.transServ = transServ;
         this._dialogComp = _dialogComp;
         this._userRepoServ = _userRepoServ;
-        this._sanitizer = _sanitizer;
         this.action = UserChangesComponent_1.ACT_FEATURES;
         this.onSucceeded = new core_1.EventEmitter();
         this.onError = new core_1.EventEmitter();
         this.onCanceled = new core_1.EventEmitter();
+        this.formData = {
+            'fullname': '',
+            'old_password': '',
+            'password': '',
+            'password_confirm': '',
+            'admin': null
+        };
     }
     UserChangesComponent.prototype.isAction = function (action) {
-        return action == this.action;
+        return !!(('' + action == this.action) && this.user);
     };
     UserChangesComponent.prototype.isActionFeatures = function () {
-        return !!(this.isAction(UserChangesComponent_1.ACT_FEATURES) && this.user);
+        return this.isAction(UserChangesComponent_1.ACT_FEATURES);
     };
     UserChangesComponent.prototype.isActionChangeFullname = function () {
-        return !!(this.isAction(UserChangesComponent_1.ACT_CHANGE_FULLNAME) && this.user);
+        return this.isAction(UserChangesComponent_1.ACT_CHANGE_FULLNAME);
     };
     UserChangesComponent.prototype.isActionChangePassword = function () {
-        return !!(this.isAction(UserChangesComponent_1.ACT_CHANGE_PASSWORD) && this.user);
+        return this.isAction(UserChangesComponent_1.ACT_CHANGE_PASSWORD);
     };
     UserChangesComponent.prototype.isActionChangeType = function () {
-        return !!(this.isAction(UserChangesComponent_1.ACT_CHANGE_TYPE) && this.user);
+        return this.isAction(UserChangesComponent_1.ACT_CHANGE_TYPE);
     };
     UserChangesComponent.prototype.isActionChangeImage = function () {
-        return !!(this.isAction(UserChangesComponent_1.ACT_CHANGE_IMAGE) && this.user);
-    };
-    UserChangesComponent.prototype.isActionAddNew = function () {
-        return this.isAction(UserChangesComponent_1.ACT_ADD_NEW);
+        return this.isAction(UserChangesComponent_1.ACT_CHANGE_IMAGE);
     };
     UserChangesComponent.prototype.actionFeatures = function () {
         this.action = UserChangesComponent_1.ACT_FEATURES;
@@ -57,44 +59,91 @@ var UserChangesComponent = UserChangesComponent_1 = (function () {
     };
     UserChangesComponent.prototype.actionChangeType = function () {
         this.action = UserChangesComponent_1.ACT_CHANGE_TYPE;
+        this.formData.admin = this.user.admin;
     };
     UserChangesComponent.prototype.actionChangeImage = function () {
         this.action = UserChangesComponent_1.ACT_CHANGE_IMAGE;
     };
-    UserChangesComponent.prototype.actionAddNew = function () {
-        this.action = UserChangesComponent_1.ACT_ADD_NEW;
-    };
     UserChangesComponent.prototype.ngOnInit = function () {
     };
-    UserChangesComponent.prototype.onFormSubmit = function () {
+    UserChangesComponent.prototype.onFormSubmit_changeFullname = function () {
         var _this = this;
         var user = this.user;
-        (function () {
-            var rt;
-            if (!user.fullname
-                || !user.username
-                || (null === user.admin || undefined === user.admin)) {
-                rt = Promise.reject(new Error(_this.transServ._('Vui lòng nhập đầy đủ thông tin để thực hiện.')));
-            }
-            else {
-                user.selfEncodePassword();
-                rt = _this._userRepoServ.insert(user);
+        user && (function () {
+            var rt = Promise.resolve();
+            var fullname = ('' + _this.formData.fullname).trim();
+            if (fullname && (user.fullname != fullname)) {
+                user.fullname = fullname;
+                rt = _this._userRepoServ.update(user);
             }
             return rt;
         })().then(function (rt) {
-            _this.user = null;
-            setTimeout(function () {
-                _this.user = new user_model_1.UserModel();
-                _this.onSucceeded.emit(_this.user);
-            });
+            _this.formData.fullname = '';
         }, function (err) {
-            var msg = err.message;
-            if (msg.indexOf('UNIQ_username') >= 0) {
-                msg = _this.transServ._('Tên đăng nhập đã được sử dụng không thể thực hiện.');
-            }
-            _this._dialogComp.alert(msg);
-            _this.onError.emit(err);
+            _this._dialogComp.alert(err.message);
+        }).then(function () {
+            _this.actionFeatures();
         });
+    };
+    UserChangesComponent.prototype.onFormSubmit_changePassword = function () {
+        var _this = this;
+        var user = this.user;
+        user && (function () {
+            var rt = Promise.resolve();
+            var old_password = user_model_1.UserModel.encodePassword('' + _this.formData.old_password);
+            var password = ('' + _this.formData.password).trim();
+            var password_confirm = ('' + _this.formData.password_confirm).trim();
+            if (old_password != user.password) {
+                rt = Promise.reject(new Error('Mật khẩu hiện tại chưa đúng.'));
+            }
+            else if (password != password_confirm) {
+                rt = Promise.reject(new Error('Mật khẩu mới không trùng khớp.'));
+            }
+            else {
+                user.password = password;
+                user.selfEncodePassword();
+                rt = _this._userRepoServ.update(user);
+            }
+            return rt;
+        })().then(function (rt) {
+            _this.formData.old_password = _this.formData.password = _this.formData.password_confirm = '';
+            _this.actionFeatures();
+        }, function (err) {
+            _this._dialogComp.alert(_this.transServ._(err.message));
+        });
+    };
+    UserChangesComponent.prototype.onFormSubmit_changeType = function () {
+        var _this = this;
+        var user = this.user;
+        user && (function () {
+            var rt = Promise.resolve();
+            user.setAdmin(_this.formData.admin);
+            rt = _this._userRepoServ.update(user);
+            return rt;
+        })().then(function (rt) {
+            _this.formData.admin = null;
+            _this.actionFeatures();
+        }, function (err) {
+            _this._dialogComp.alert(_this.transServ._(err.message));
+        });
+    };
+    UserChangesComponent.prototype.onFormSubmit_changeImage = function (usrImgEle) {
+        var _this = this;
+        if (!usrImgEle.files.length) {
+            this.actionFeatures();
+        }
+        else {
+            var usrImg = usrImgEle.files[0];
+            this._userRepoServ.changeImage(this.user, usrImg)
+                .then(function () {
+                _this.actionFeatures();
+            })
+                .catch(function (e) {
+                _this._dialogComp.alert(_this.transServ._('Thay đổi ảnh đại diện không thành công. Err: ' + e.message));
+            });
+        }
+    };
+    UserChangesComponent.prototype.deleteUser = function () {
     };
     UserChangesComponent.prototype.onCancel = function () {
         this.onCanceled.emit();
@@ -106,7 +155,6 @@ UserChangesComponent.ACT_CHANGE_FULLNAME = 'change_fullname';
 UserChangesComponent.ACT_CHANGE_PASSWORD = 'change_password';
 UserChangesComponent.ACT_CHANGE_TYPE = 'change_type';
 UserChangesComponent.ACT_CHANGE_IMAGE = 'change_image';
-UserChangesComponent.ACT_ADD_NEW = 'add_new';
 __decorate([
     core_1.Output(),
     __metadata("design:type", core_1.EventEmitter)
@@ -133,8 +181,7 @@ UserChangesComponent = UserChangesComponent_1 = __decorate([
     }),
     __metadata("design:paramtypes", [translator_service_1.TranslatorService,
         dialog_component_1.DialogComponent,
-        user_repo_service_1.UserRepoService,
-        platform_browser_1.DomSanitizer])
+        user_repo_service_1.UserRepoService])
 ], UserChangesComponent);
 exports.UserChangesComponent = UserChangesComponent;
 var UserChangesComponent_1;

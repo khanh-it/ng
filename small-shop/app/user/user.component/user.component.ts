@@ -30,12 +30,7 @@ export class UserComponent implements OnInit {
     protected _userRepoServ: UserRepoService,
     protected _sanitizer: DomSanitizer
   ) {}
-
-  public formData:any = {
-    'fullname': '',
-    'password': ''
-  };
-
+  
   public selectedUser:UserModel;
 
   public users:UserModel[] = [];
@@ -72,7 +67,7 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
   }
 
   public selectUser(user:UserModel):void {

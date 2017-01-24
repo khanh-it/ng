@@ -36,6 +36,10 @@ var UserRepoService = (function (_super) {
             .catch(function () { return false; })
             .then(function () { return true; });
     };
+    UserRepoService.prototype.changeImage = function (user, img) {
+        user.setImg(img);
+        return this.update(user);
+    };
     UserRepoService.prototype.getAllUsers = function () {
         var _this = this;
         var DDocName = user_model_1.UserModel.getDDocName('');

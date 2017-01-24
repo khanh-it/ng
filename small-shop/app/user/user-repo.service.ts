@@ -29,6 +29,11 @@ export class UserRepoService extends Core_UserRepoService {
     ;
   }
 
+  public changeImage(user:UserModel, img?:File):Promise<any> {
+    user.setImg(img);
+    return this.update(user);
+  }
+
   /* Get all users data */
   public getAllUsers():Promise<UserModel[]> {
     let DDocName = UserModel.getDDocName('');

@@ -2,6 +2,8 @@ body{
   min-width: 1000px;
   overflow: auto;
   background-color: #EFEFEF;
+  /*font-size: 14px;*/
+  font-family: 'Roboto Slab', serif;
 }
 /* */
 .alert-xs{

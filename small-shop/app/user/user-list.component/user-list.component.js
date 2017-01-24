@@ -17,14 +17,22 @@ var UserListComponent = (function () {
         this.transServ = transServ;
         this._dialogComp = _dialogComp;
         this._userRepoServ = _userRepoServ;
+        this.onUserSelected = new core_1.EventEmitter();
         this.users = [];
     }
     UserListComponent.prototype.ngOnInit = function () {
         var _this = this;
         this._userRepoServ.getAllUsers().then(function (users) { return _this.users = users; });
     };
+    UserListComponent.prototype.selectUser = function (user) {
+        this.onUserSelected.emit(this.selectedUser = user);
+    };
     return UserListComponent;
 }());
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", core_1.EventEmitter)
+], UserListComponent.prototype, "onUserSelected", void 0);
 UserListComponent = __decorate([
     core_1.Component({
         moduleId: module.id,

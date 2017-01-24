@@ -31,14 +31,17 @@ var UserModel = (function (_super) {
         }
         return false;
     };
+    UserModel.prototype.setAdmin = function (admin) {
+        this.admin = (UserModel.ADMIN_YES === admin)
+            ? admin : UserModel.ADMIN_NO;
+    };
     UserModel.prototype.init = function (data) {
         this.fullname = data['fullname'] ? ('' + data['fullname']) : '';
         this.username = data['username'] ? ('' + data['username']) : '';
         this.password = data['password'] ? ('' + data['password']) : '';
         this.active = (UserModel.ACTIVE_NO === data['active'])
             ? data['active'] : UserModel.ACTIVE_YES;
-        this.admin = (UserModel.ADMIN_YES === data['admin'])
-            ? data['admin'] : UserModel.ADMIN_NO;
+        this.setAdmin(data['admin']);
         return this;
     };
     return UserModel;
