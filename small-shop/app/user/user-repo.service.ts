@@ -22,10 +22,18 @@ export class UserRepoService extends Core_UserRepoService {
   public update(user:UserModel):Promise<boolean> {
     return this._dbS.get(user.id())
       .then((doc) => {//user._rev = doc._rev;
-        return this._dbS.put(user);
+        this._dbS.put(user);
+        return true;
       })
       .catch(() => false)
-      .then(() => true)
+    ;
+  }
+
+  public delete(user:UserModel):Promise<boolean> {
+    return this._dbS.get(user.id())
+      .then((doc) => {
+        return this._dbS.remove(user);
+      })
     ;
   }
 

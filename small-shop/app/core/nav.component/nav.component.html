@@ -20,14 +20,17 @@
             <li routerLinkActive="active"><a routerLink="setup">{{transServ._('Cài đặt')}}</a></li>
             <li routerLinkActive="active"><a routerLink="user">{{transServ._('Tài khoản')}}</a></li>
             <li role="separator" routerLinkActive="active" class="divider"></li>
-            <li routerLinkActive="active"><a href="#">Separated link</a></li>
-            <li role="separator" routerLinkActive="active" class="divider"></li>
             <li routerLinkActive="active">
               <a routerLink="logout">{{transServ._('Đăng xuất')}}</a>
             </li>
           </ul>
         </li>
-        <li routerLinkActive="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dữ liệu cơ sở <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li routerLinkActive="active"><a routerLink="prod">{{transServ._('Sản phẩm')}}</a></li>
+          </ul>
+        </li>
         <li><a href="#">Link</a></li>
       </ul>
       <form class="navbar-form navbar-left">

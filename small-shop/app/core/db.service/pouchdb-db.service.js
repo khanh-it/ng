@@ -57,6 +57,10 @@ var PouchdbDbService = PouchdbDbService_1 = (function (_super) {
     PouchdbDbService.prototype.put = function (doc, callback) {
         return this._db.put(doc, callback);
     };
+    PouchdbDbService.prototype.remove = function (doc, callback) {
+        doc._deleted = true;
+        return this.put(doc, callback);
+    };
     PouchdbDbService.prototype.putUniq = function (index, keys, doc, callback) {
         var _this = this;
         var keyUniq;

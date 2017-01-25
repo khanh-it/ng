@@ -25,7 +25,7 @@ import { UserModel } from '../user.model';
 })
 export class UserSmallBoxInfoComponent implements OnInit {
 
-  @Input() public isActive:boolean = false;
+  @Input() public isActive:void|boolean = null;
 
   @Input() public user:UserModel;
 
@@ -40,11 +40,29 @@ export class UserSmallBoxInfoComponent implements OnInit {
   ngOnInit() {}
 
   public selectUser():void {
-    this.onUserSelected.emit(this.user);
+    if (!this.isActiveFalse()) {
+      this.onUserSelected.emit(this.user);  
+    }
   }
 
   /** */
   public getUserImgBase64():SafeResourceUrl {
     return this._sanitizer.bypassSecurityTrustResourceUrl(this.user.getImgBase64());
+  }
+
+  public active(){
+    this.isActive = true;
+  }
+
+  public isActiveTrue(){
+    return (true === this.isActive);
+  }
+
+  public inactive(){
+    this.isActive = false;
+  }
+
+  public isActiveFalse(){
+    return false === this.isActive;
   }
 }

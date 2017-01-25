@@ -225,10 +225,6 @@ export class UserChangesComponent implements OnInit {
     }
   }
 
-  public deleteUser() {
-
-  }
-
   public onCancel():void {
     this.onCanceled.emit();
   }

@@ -18,6 +18,8 @@ const routes: Routes = [
   { path: 'setup', loadChildren: 'app/setup/setup.module#SetupModule'},
   // ---
   { path: 'user', loadChildren: 'app/user/user.module#UserModule'},
+  // ---
+  { path: 'prod', loadChildren: 'app/product/product.module#ProductModule'},
   /* { path: '', component: DashboardComponent, canActivate: [AuthGuardService],
     children: [
       {

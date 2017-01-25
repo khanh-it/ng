@@ -31,10 +31,17 @@ var UserRepoService = (function (_super) {
         var _this = this;
         return this._dbS.get(user.id())
             .then(function (doc) {
-            return _this._dbS.put(user);
+            _this._dbS.put(user);
+            return true;
         })
-            .catch(function () { return false; })
-            .then(function () { return true; });
+            .catch(function () { return false; });
+    };
+    UserRepoService.prototype.delete = function (user) {
+        var _this = this;
+        return this._dbS.get(user.id())
+            .then(function (doc) {
+            return _this._dbS.remove(user);
+        });
     };
     UserRepoService.prototype.changeImage = function (user, img) {
         user.setImg(img);

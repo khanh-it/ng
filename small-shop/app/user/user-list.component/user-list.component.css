@@ -1,3 +1,4 @@
 /* app/user/user.component/user-list.compnent.css */
-
+.col{position: relative;}
+span.text-right{position: absolute;bottom: 2px;right: 17px;z-index: 1;}
 /* end#app/user/user.component/user-list.compnent.css */

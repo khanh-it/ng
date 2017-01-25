@@ -15,6 +15,7 @@ var routes = [
     { path: 'test', loadChildren: 'app/test/test.module#TestModule' },
     { path: 'setup', loadChildren: 'app/setup/setup.module#SetupModule' },
     { path: 'user', loadChildren: 'app/user/user.module#UserModule' },
+    { path: 'prod', loadChildren: 'app/product/product.module#ProductModule' },
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {

@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var user_component_1 = require("./user.component/user.component");
-var user_cud_component_1 = require("./user-cud.component/user-cud.component");
 var routes = [
     { path: '', component: user_component_1.UserComponent, data: {},
         children: [
@@ -19,7 +18,6 @@ var routes = [
                 path: '',
                 children: []
             },
-            { path: 'addnew', component: user_cud_component_1.UserCudComponent },
         ]
     },
 ];

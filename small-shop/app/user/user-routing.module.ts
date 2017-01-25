@@ -27,7 +27,6 @@ const routes: Routes = [
           //{ path: '', component: UserListComponent }
         ]
       },
-      { path: 'addnew', component: UserCudComponent},
     ]
   },
 /* #end.user */

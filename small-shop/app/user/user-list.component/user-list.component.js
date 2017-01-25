@@ -21,11 +21,34 @@ var UserListComponent = (function () {
         this.users = [];
     }
     UserListComponent.prototype.ngOnInit = function () {
+        this._refreshUserList();
+    };
+    UserListComponent.prototype._refreshUserList = function () {
         var _this = this;
         this._userRepoServ.getAllUsers().then(function (users) { return _this.users = users; });
     };
     UserListComponent.prototype.selectUser = function (user) {
         this.onUserSelected.emit(this.selectedUser = user);
+    };
+    UserListComponent.prototype.deleteUser = function (user, usrSmallBoxInf) {
+        var _this = this;
+        if (user) {
+            this._dialogComp.confirm(this.transServ._("X\u00F3a t\u00E0i kho\u1EA3n: " + user.fullname + " [" + user.username + "]?")).then(function (rs) {
+                if (!rs)
+                    return;
+                usrSmallBoxInf.inactive();
+                _this._userRepoServ.delete(user)
+                    .then(function (rs) {
+                    _this._refreshUserList();
+                })
+                    .catch(function (err) {
+                    _this._dialogComp.alert(_this.transServ._("X\u00F3a t\u00E0i kho\u1EA3n kh\u00F4ng th\u00E0nh c\u00F4ng. Err: " + err.message + "."));
+                })
+                    .then(function () {
+                    usrSmallBoxInf.active();
+                });
+            });
+        }
     };
     return UserListComponent;
 }());

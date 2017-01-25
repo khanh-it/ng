@@ -89,6 +89,14 @@ export class PouchdbDbService extends AbstractDbService {
   }
 
   /**
+   *
+   */
+  public remove(doc:any, callback?:Function):Promise<any> {
+    doc._deleted = true;
+    return this.put(doc, callback);
+  }
+
+  /**
    * Insert, update data
    */
   public putUniq(

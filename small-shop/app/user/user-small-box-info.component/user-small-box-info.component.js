@@ -16,21 +16,35 @@ var UserSmallBoxInfoComponent = (function () {
     function UserSmallBoxInfoComponent(transServ, _sanitizer) {
         this.transServ = transServ;
         this._sanitizer = _sanitizer;
-        this.isActive = false;
+        this.isActive = null;
         this.onUserSelected = new core_1.EventEmitter();
     }
     UserSmallBoxInfoComponent.prototype.ngOnInit = function () { };
     UserSmallBoxInfoComponent.prototype.selectUser = function () {
-        this.onUserSelected.emit(this.user);
+        if (!this.isActiveFalse()) {
+            this.onUserSelected.emit(this.user);
+        }
     };
     UserSmallBoxInfoComponent.prototype.getUserImgBase64 = function () {
         return this._sanitizer.bypassSecurityTrustResourceUrl(this.user.getImgBase64());
+    };
+    UserSmallBoxInfoComponent.prototype.active = function () {
+        this.isActive = true;
+    };
+    UserSmallBoxInfoComponent.prototype.isActiveTrue = function () {
+        return (true === this.isActive);
+    };
+    UserSmallBoxInfoComponent.prototype.inactive = function () {
+        this.isActive = false;
+    };
+    UserSmallBoxInfoComponent.prototype.isActiveFalse = function () {
+        return false === this.isActive;
     };
     return UserSmallBoxInfoComponent;
 }());
 __decorate([
     core_1.Input(),
-    __metadata("design:type", Boolean)
+    __metadata("design:type", Object)
 ], UserSmallBoxInfoComponent.prototype, "isActive", void 0);
 __decorate([
     core_1.Input(),

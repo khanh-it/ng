@@ -42,10 +42,42 @@ export class UserListComponent implements OnInit {
 
   public ngOnInit() {
     // Refresh list of users...
+    this._refreshUserList();
+  }
+
+  // Refresh list of users...
+  protected _refreshUserList() {
+    // Refresh list of users...
     this._userRepoServ.getAllUsers().then(users => this.users = users);
   }
 
   public selectUser(user:UserModel):void {
     this.onUserSelected.emit(this.selectedUser = user);
+  }
+
+  public deleteUser(user:UserModel, usrSmallBoxInf:any):void {
+    if (user) {
+      this._dialogComp.confirm(
+        this.transServ._(`Xóa tài khoản: ${user.fullname} [${user.username}]?`)
+      ).then(rs => {
+        if (!rs) return;
+        // Mark as inactive when processing
+        usrSmallBoxInf.inactive();
+        // Delete user data
+        this._userRepoServ.delete(user)
+          .then(rs => {
+            this._refreshUserList();
+          })
+          .catch((err:Error) => {
+            // Inform
+            this._dialogComp.alert(this.transServ._(`Xóa tài khoản không thành công. Err: ${err.message}.`));
+          })
+          .then(() => {
+            // Mark as inactive when done
+            usrSmallBoxInf.active();
+          })
+        ;
+      });
+    }
   }
 }

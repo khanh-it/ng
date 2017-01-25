@@ -10,5 +10,10 @@
   background-color: #d9edf7;
   border-color: #bce8f1;
 }
+.user-small-box-info.inactive{
+  background-color: #ddd;
+    border-color: #ccc;
+    cursor: not-allowed;
+}
 img.user-img{outline: 1px solid silver;max-width: 64px; max-height: 64px;}
 /* end#app/user/user.component/user-small-box-info.css */

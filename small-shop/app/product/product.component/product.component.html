@@ -1,0 +1,37 @@
+<router-outlet></router-outlet>
+<!-- panel -->
+<div class="panel panel-default">
+  <!-- panel-heading -->
+  <div class="panel-heading">
+    <h3 class="panel-title">{{transServ._('Sản phẩm')}}</h3>
+  </div>
+  <!-- end#panel-heading -->
+  <!-- panel-body -->
+  <div class="panel-body">
+
+    <!-- Action: list of products -->
+    <div *ngIf="isActionList()" class="clearfix">
+      <div class="text-right">
+        <a href="#" (click)="actionAddNew(); $event.preventDefault();" class="btn btn-default btn-sm">
+          <i class="glyphicon glyphicon-plus"></i> {{transServ._('Thêm sản phẩm mới')}}
+        </a>
+      </div>
+      <app-product-list (onProductSelected)="selectProduct($event); actionChanges()"></app-product-list>
+    </div>
+    <!-- end#Action: list of products -->
+
+    <!-- Action: add new product -->
+    <app-product-cud *ngIf="isActionAddNew()" (onSucceeded)="actionList();" (onCanceled)="actionList();"></app-product-cud>
+    <!-- end#Action: add new product -->
+
+    <!-- Action: product changes -->
+    <app-product-changes *ngIf="isActionChanges()" [product]="selectedProduct" (onCanceled)="actionList();"></app-product-changes>
+    <!-- end#Action: product changes -->
+
+  </div>
+  <!-- end#panel-body -->
+  <!-- panel-footer -->
+  <div class="panel-footer"></div>
+  <!-- end#panel-footer -->
+</div>
+<!-- end#panel -->

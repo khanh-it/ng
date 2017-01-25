@@ -143,8 +143,6 @@ var UserChangesComponent = UserChangesComponent_1 = (function () {
             });
         }
     };
-    UserChangesComponent.prototype.deleteUser = function () {
-    };
     UserChangesComponent.prototype.onCancel = function () {
         this.onCanceled.emit();
     };

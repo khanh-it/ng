@@ -1,0 +1,5 @@
+<div class="row" *ngIf="products">
+  <div class="col-xs-12 col-sm-4" *ngFor="let product of products; let idx = index;">
+    <app-product-small-box-info [product]="product" (onProductSelected)="selectProduct($event);"></app-product-small-box-info>
+  </div>
+</div>

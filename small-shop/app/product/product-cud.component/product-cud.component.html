@@ -1,0 +1,73 @@
+<form *ngIf="!!product" class="col-xs-12 col-sm-push-2 col-sm-8" #formCudNG="ngForm" #formCudEle (ngSubmit)="onFormSubmit(formCudNG, formCudEle)">
+  <!-- product's fullname -->
+  <div class="form-group">
+    <label for="fullname">{{transServ._('Họ và tên')}}</label>
+    <div class="input-group shadow-br-3">
+      <span class="input-group-addon"></span>
+      <input type="text" class="form-control" required [(ngModel)]="product.fullname" name="product[fullname]" #productFullnameNG="ngModel" placeholder="{{transServ._('Họ và tên')}}">
+      <span class="input-group-addon">
+        <span class="glyphicon glyphicon-asterisk text-danger"></span>
+      </span>
+    </div>
+    <div [hidden]="productFullnameNG.valid || productFullnameNG.pristine"  class="alert alert-xs alert-danger">
+      <small>{{transServ._('Họ và tên là bắt buộc!')}}</small>
+    </div>
+  </div><!-- end#product's fullname -->
+  <!-- product's productname -->
+  <div class="form-group">
+    <label for="productname">{{transServ._('Tên đăng nhập')}}</label>
+    <div class="input-group shadow-br-3">
+      <span class="input-group-addon"></span>
+      <input type="text" class="form-control" required [(ngModel)]="product.productname" name="product[productname]" #productProductnameNG="ngModel" placeholder="{{transServ._('Tên đăng nhập')}}">
+      <span class="input-group-addon">
+        <span class="glyphicon glyphicon-asterisk text-danger"></span>
+      </span>
+    </div>
+    <div [hidden]="productProductnameNG.valid || productProductnameNG.pristine"  class="alert alert-xs alert-danger">
+      <small>{{transServ._('Tên đăng nhập là bắt buộc!')}}</small>
+    </div>
+  </div><!-- end#product's productname -->
+  <!-- product's password -->
+  <div class="form-group">
+    <label for="password">{{transServ._('Mật khẩu')}}</label>
+    <div class="input-group shadow-br-3">
+      <span class="input-group-addon"></span>
+      <input type="password" class="form-control" minlength="6" maxlength="50" (ngModel)="product.password" name="product[password]" #productPasswordNG="ngModel" #productPassword placeholder="{{transServ._('Mật khẩu')}}">
+      <span class="input-group-addon">
+        <label class="control-label">
+          <input type="checkbox" (click)="$event.target.checked ? (productPassword.type = 'text') : (productPassword.type = 'password');" >
+          <small>{{transServ._('Hiển thị?')}}</small>
+        </label>
+      </span>
+    </div>
+    <p>
+      <small>{{transServ._('Chiều dài mật khẩu tối thiểu: %minln%, tối đa: %maxln%.', {'minln': productPassword.minLength, 'maxln': productPassword.maxLength})}}</small>
+    </p>
+  </div><!-- end#product's password -->
+  <!-- product's type -->
+  <div class="form-group">
+    <label>{{transServ._('Loại sản phẩm')}}</label>
+    <p class="clearfix">
+      <label class="control-label">
+        <input type="radio" class="" [(ngModel)]="product.admin" [value]="0" name="product[admin]" #productTypeNormalNG="ngModel">
+        <small>{{transServ._('Sản phẩm thường')}}</small>
+      </label><br/>
+      <span>&nbsp;&nbsp;&nbsp;{{transServ._('Thông tin về loại sản phẩm thường')}}</span>
+    </p>
+    <p class="clearfix">
+      <label class="control-label">
+        <input type="radio" class="" [(ngModel)]="product.admin" [value]="1" name="product[admin]" #productTypeAdminNG="ngModel">
+        <small>{{transServ._('Sản phẩm quản trị')}}</small>
+      </label><br/>
+      <span>&nbsp;&nbsp;&nbsp;{{transServ._('Thông tin về loại sản phẩm quản trị')}}</span>
+    </p>
+  </div><!-- end#product's type -->
+  <div class="form-group text-right">
+    <button class="btn btn-sm btn-default">
+      <i class="glyphicon glyphicon-floppy-disk"></i> {{transServ._('Lưu')}}
+    </button>&nbsp;
+    <a href="#" class="btn btn-sm btn-default" (click)="onCancel(); $event.preventDefault();">
+      <i class="glyphicon glyphicon-floppy-remove"></i> {{transServ._('Hủy')}}
+    </a>
+  </div>
+</form>
