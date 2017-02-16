@@ -1,5 +1,65 @@
-<div class="row" *ngIf="products">
-  <div class="col-xs-12 col-sm-4" *ngFor="let product of products; let idx = index;">
-    <app-product-small-box-info [product]="product" (onProductSelected)="selectProduct($event);"></app-product-small-box-info>
+<!-- end#filter form -->
+<form id="form-filter" class="form-inline">
+  <div class="form-group">
+    <label for="fe-keyword">{{transServ._('Từ khóa')}}</label>
+    <input type="text" class="form-control input-sm" id="fe-keyword" placeholder="{{transServ._('Từ khóa')}}">
   </div>
-</div>
+  <div class="form-group">
+    <label for="fe-price-from">{{transServ._('Đơn giá')}}</label>
+    <div class="input-group">
+      <span class="input-group-addon">{{transServ._('từ')}}</span>
+      <input type="text" class="form-control input-sm text-right text-numeric numeric-integer" id="fe-price-from" placeholder="0">
+      <span class="input-group-addon">{{transServ._('đ')}}</span>
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon">{{transServ._('đến')}}</span>
+      <input type="text" class="form-control input-sm text-right text-numeric numeric-integer" id="fe-price-to" placeholder="0">
+      <span class="input-group-addon">{{transServ._('đ')}}</span>
+    </div>
+  </div>
+  <button type="reset" class="btn btn-warning btn-sm">
+    <i class="glyphicon glyphicon-refresh"></i>
+  </button>
+  <button type="submit" class="btn btn-primary btn-sm">
+    <i class="glyphicon glyphicon-filter"></i>
+  </button>
+</form>
+<!-- end#filter form -->
+<div class="table-responsive" *ngIf="products">
+  <table class="table table-bordered table-hover table-condensed table-striped">
+    <thead>
+      <tr>
+        <th width="1%">No.</th>
+        <th>{{transServ._('Mã SP')}}</th>
+        <th>{{transServ._('Tên SP')}}</th>
+        <th>{{transServ._('Đơn giá')}}</th>
+        <th>{{transServ._('Mô tả')}}</th>
+        <th width="1%">{{transServ._('Q.Lý')}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products; let idx = index;">
+        <td class="text-center">{{idx + 1}}</td>
+        <td>{{product.code}}</td>
+        <td>{{product.name}}</td>
+        <td class="text-right">{{product.price}}đ</td>
+        <td>{{product.note}}</td>
+        <td class="text-nowrap">
+          <a href="#" class="btn btn-sm btn-primary">
+            <i class="glyphicon glyphicon-edit"></i>
+          </a>&nbsp;
+          <a href="#" class="btn btn-sm btn-danger" (click)="onCancel(); $event.preventDefault();">
+            <i class="glyphicon glyphicon-floppy-remove"></i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="100">
+          <app-paging #pager [totalItems]="pagingData.totalRows" [itemsPerPage]="pagingData.limit" (onPageChanges)="onPagerPageChanges($event.page, $event.offset);"></app-paging>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div><!-- end#list of products -->

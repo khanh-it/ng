@@ -4,7 +4,10 @@ import { Injectable } from '@angular/core';
 import { ProductModel } from './product.model';
 
 // Services
-import { AbstractRepoService as Core_AbstractRepoService } from '../core/abstract-repo.service';
+import {
+  AbstractRepoService as Core_AbstractRepoService,
+  PDBQueryResponse
+} from '../core/abstract-repo.service';
 
 @Injectable()
 export class ProductRepoService extends Core_AbstractRepoService {
@@ -15,8 +18,8 @@ export class ProductRepoService extends Core_AbstractRepoService {
   }
 
   public insert(product:ProductModel):Promise<any> {
-    let key = ProductModel.getDDocName('UNIQ_productname');
-    return this._dbS.putUniq(key, 'productname', product);
+    let key = ProductModel.getDDocName('UNIQ_code');
+    return this._dbS.putUniq(key, 'code', product);
   }
 
   public update(product:ProductModel):Promise<boolean> {
@@ -35,18 +38,19 @@ export class ProductRepoService extends Core_AbstractRepoService {
   }
 
   /* Get all products data */
-  public getAllProducts():Promise<ProductModel[]> {
+  public getAllProducts(options:any):Promise<PDBQueryResponse> {
+    // Fetch data options
+    options = options ? options : {};
+    // --- Query options
+    let queryOptions = options.query ? options.query : {};
+    // +++
+    queryOptions['include_docs'] = true;
+    // +++
+    //options.query['include_attachments'] = true;
+    //
     let DDocName = ProductModel.getDDocName('');
-    return new Promise((rs, rj) => {
-      this._dbS.query(DDocName, {
-        include_docs: true
-      }).then(rt => {
-        let products:ProductModel[] = [];
-        rt.rows.forEach((row:any) => {
-          products.push(new ProductModel(row.doc));
-        });
-        rs(products);
-      }, rj);
-    });
+
+    // Return
+    return this._dbS.query(DDocName, queryOptions);
   }
 }

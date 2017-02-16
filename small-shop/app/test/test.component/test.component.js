@@ -35,8 +35,20 @@ var TestComponent = (function () {
     TestComponent.prototype.addItem = function () {
         this.items.push("Items " + (this.items.length + 1));
     };
+    TestComponent.prototype.ngOnInit = function () {
+        console.log('this._pager: ', this._pager);
+    };
+    TestComponent.prototype.onPagerPageChanges = function (_a) {
+        var page = _a.page, pager = _a.pager;
+        console.log('page: ', page);
+        console.log('pager: ', pager);
+    };
     return TestComponent;
 }());
+__decorate([
+    core_1.ViewChild('pager'),
+    __metadata("design:type", Object)
+], TestComponent.prototype, "_pager", void 0);
 TestComponent = __decorate([
     core_1.Component({
         moduleId: module.id,

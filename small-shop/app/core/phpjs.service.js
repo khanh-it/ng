@@ -15,8 +15,10 @@ if (!window.hasOwnProperty('_phpjs')) {
 }
 var PhpjsService = (function () {
     function PhpjsService() {
-        Object.defineProperty(window, '_phpjsServ', { value: this._ = this });
     }
+    PhpjsService.phpjs = function () {
+        return phpjs;
+    };
     return PhpjsService;
 }());
 PhpjsService = __decorate([

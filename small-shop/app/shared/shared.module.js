@@ -8,33 +8,30 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-// module(s)
-var core_1 = require('@angular/core');
-var common_1 = require('@angular/common');
-var forms_1 = require('@angular/forms');
-// directive(s)
-//import { HighlightDirective }         from './highlight.directive';
-// pipe(s)
-//import { AwesomePipe }         from './awesome.pipe';
+var core_1 = require("@angular/core");
+var common_1 = require("@angular/common");
+var forms_1 = require("@angular/forms");
+var paging_component_1 = require("./paging.component/paging.component");
 var SharedModule = (function () {
     function SharedModule() {
     }
-    SharedModule = __decorate([
-        core_1.NgModule({
-            imports: [
-                common_1.CommonModule
-            ],
-            declarations: [],
-            exports: [
-                //AwesomePipe,
-                //HighlightDirective,
-                common_1.CommonModule,
-                forms_1.FormsModule
-            ]
-        }), 
-        __metadata('design:paramtypes', [])
-    ], SharedModule);
     return SharedModule;
 }());
+SharedModule = __decorate([
+    core_1.NgModule({
+        imports: [
+            common_1.CommonModule
+        ],
+        declarations: [
+            paging_component_1.PagingComponent,
+        ],
+        exports: [
+            common_1.CommonModule,
+            forms_1.FormsModule,
+            paging_component_1.PagingComponent
+        ]
+    }),
+    __metadata("design:paramtypes", [])
+], SharedModule);
 exports.SharedModule = SharedModule;
 //# sourceMappingURL=shared.module.js.map

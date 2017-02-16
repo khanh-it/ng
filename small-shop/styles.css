@@ -37,4 +37,10 @@ body{
   -o-box-shadow: 12px 12px 24px silver;
   margin-bottom: 24px;
 }
+.text-noresize{
+  resize: none;
+}
+.text-nowrap{
+  white-space: nowrap;
+}
 /* .end#Master Styles */

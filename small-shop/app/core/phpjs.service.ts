@@ -10,11 +10,15 @@ if (!window.hasOwnProperty('_phpjs')) {
 @Injectable()
 export class PhpjsService {
 
-  public _:any;
+  public static phpjs() {
+    return phpjs;
+  }
+
+  //public _:any;
 
   /** Constructor */
   public constructor () {
-    Object.defineProperty(window, '_phpjsServ', {value: this._ = this});
+    //Object.defineProperty(window, '_phpjsServ', {value: this._ = this});
   }
 
   /*public _():any {

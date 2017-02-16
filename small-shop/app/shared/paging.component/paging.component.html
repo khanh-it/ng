@@ -1,0 +1,44 @@
+<nav aria-label="pagination">
+    <ul class="pagination">
+      <!-- first page -->
+      <li *ngIf="totalPages.length" [class.disabled]="1 == currentPage">
+        <span *ngIf="1 == currentPage"><span aria-hidden="true">&laquo;</span></span>
+        <a *ngIf="1 != currentPage" href="javascript:void(0);" (click)="go(1)" aria-label="First">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <!-- end#first page -->
+
+      <!-- Previous page -->
+      <li *ngIf="totalPages.length" [class.disabled]="1 == currentPage">
+        <span *ngIf="1 == currentPage"><span aria-hidden="true">&lsaquo;</span></span>
+        <a *ngIf="1 != currentPage" href="javascript:void(0);" (click)="go(currentPage - 1)" aria-label="Previous">
+          <span aria-hidden="true">&lsaquo;</span>
+        </a>
+      </li>
+      <!-- end#Previous page -->
+
+      <!-- Pages -->
+      <li *ngFor="let page of totalPages;" [class.active]="page == currentPage">
+        <a href="javascript:void(0);"(click)="go(page)">{{page}} <span class="sr-only">{{page}}</span></a>
+      </li>
+      <!-- end#Pages -->
+
+      <!-- Next page -->
+      <li *ngIf="totalPages.length" [class.disabled]="totalPages.length == currentPage">
+        <span *ngIf="totalPages.length == currentPage"><span aria-hidden="true">&rsaquo;</span></span>
+        <a *ngIf="totalPages.length != currentPage" href="javascript:void(0);" (click)="go(currentPage + 1)" aria-label="Next">
+          <span aria-hidden="true">&rsaquo;</span>
+        </a>
+      </li>
+      <!-- end#Next page -->
+      <!-- Last page -->
+      <li *ngIf="totalPages.length" [class.disabled]="totalPages.length == currentPage">
+        <span *ngIf="totalPages.length == currentPage"><span aria-hidden="true">&raquo;</span></span>
+        <a *ngIf="totalPages.length != currentPage" href="javascript:void(0);" (click)="go(totalPages.length)" aria-label="Last">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+      <!-- end#Last page -->
+    </ul>
+</nav>

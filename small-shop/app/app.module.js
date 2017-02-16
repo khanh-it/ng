@@ -8,39 +8,31 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-/* Configs */
-var app_config_1 = require('./app-config');
-/* Routing Module */
-var app_routing_module_1 = require('./app-routing.module');
-/* module(s) */
-var core_1 = require('@angular/core');
-var platform_browser_1 = require('@angular/platform-browser');
-//import { MaterialModule } from '@angular/material';
-/* -- Feature Modules */
-var core_module_1 = require('./core/core.module');
-/* component(s) */
+var app_config_1 = require("./app-config");
+var app_routing_module_1 = require("./app-routing.module");
+var core_1 = require("@angular/core");
+var platform_browser_1 = require("@angular/platform-browser");
+var core_module_1 = require("./core/core.module");
 var AppModule = (function () {
     function AppModule() {
     }
-    AppModule = __decorate([
-        core_1.NgModule({
-            imports: [
-                platform_browser_1.BrowserModule,
-                app_routing_module_1.AppRoutingModule,
-                //MaterialModule.forRoot(),
-                core_module_1.CoreModule
-            ],
-            exports: [],
-            declarations: [],
-            bootstrap: [core_module_1.AppComponent],
-            providers: [
-                // Application configs
-                { provide: app_config_1.APP_CONFIG, useValue: app_config_1.app_config },
-            ]
-        }), 
-        __metadata('design:paramtypes', [])
-    ], AppModule);
     return AppModule;
 }());
+AppModule = __decorate([
+    core_1.NgModule({
+        imports: [
+            platform_browser_1.BrowserModule,
+            app_routing_module_1.AppRoutingModule,
+            core_module_1.CoreModule
+        ],
+        exports: [],
+        declarations: [],
+        bootstrap: [core_module_1.AppComponent],
+        providers: [
+            { provide: app_config_1.APP_CONFIG, useValue: app_config_1.app_config },
+        ]
+    }),
+    __metadata("design:paramtypes", [])
+], AppModule);
 exports.AppModule = AppModule;
 //# sourceMappingURL=app.module.js.map

@@ -48,6 +48,7 @@ export class ProductCudComponent implements OnInit {
 
   @Input() public cudProduct:ProductModel;
 
+  /**  */
   public product:ProductModel = new ProductModel();
 
   ngOnInit() {
@@ -62,16 +63,16 @@ export class ProductCudComponent implements OnInit {
     (() => {
       let rt;
       // Check data validation
-      if (!product.fullname
-          || !product.productname
-          //|| !product.password
-          || (null === product.admin || undefined === product.admin)
+      if (!product.name
+          || !product.code
+          || ('' == ('' + product.price))
       ) {
         rt = Promise.reject(new Error(this.transServ._('Vui lòng nhập đầy đủ thông tin để thực hiện.')));
       } else {
         // Format data;
-        // ---
-        product.selfEncodePassword();
+        // --- price
+        this.product.price = +this.product.price;
+        // ...
         // Insert new product data
         rt = this._productRepoServ.insert(product);
       }
@@ -87,14 +88,18 @@ export class ProductCudComponent implements OnInit {
           // Reset form data
           this.product = new ProductModel();
           // Emit event for parent components
-          this.onSucceeded.emit(this.product);
+          this._dialogComp.alert(this.transServ._('Thao tác dữ liệu thành công!'))
+            .then(() => {
+              this.onSucceeded.emit(this.product);
+            })
+          ;
         });
       },
       (err:Error) => {
         let msg = err.message;
-        // Case: unique productname?
-        if (msg.indexOf('UNIQ_productname') >= 0) {
-          msg = this.transServ._('Tên đăng nhập đã được sử dụng không thể thực hiện.');
+        // Case: unique code?
+        if (msg.indexOf('UNIQ_code') >= 0) {
+          msg = this.transServ._('Mã sản phẩm đã được sử dụng không thể thực hiện.');
         }
         // Inform
         this._dialogComp.alert(msg);

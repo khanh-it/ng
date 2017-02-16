@@ -33,13 +33,13 @@ var ProductCudComponent = (function () {
         var product = this.product;
         (function () {
             var rt;
-            if (!product.fullname
-                || !product.productname
-                || (null === product.admin || undefined === product.admin)) {
+            if (!product.name
+                || !product.code
+                || ('' == ('' + product.price))) {
                 rt = Promise.reject(new Error(_this.transServ._('Vui lòng nhập đầy đủ thông tin để thực hiện.')));
             }
             else {
-                product.selfEncodePassword();
+                _this.product.price = +_this.product.price;
                 rt = _this._productRepoServ.insert(product);
             }
             return rt;
@@ -47,12 +47,15 @@ var ProductCudComponent = (function () {
             _this.product = null;
             setTimeout(function () {
                 _this.product = new product_model_1.ProductModel();
-                _this.onSucceeded.emit(_this.product);
+                _this._dialogComp.alert(_this.transServ._('Thao tác dữ liệu thành công!'))
+                    .then(function () {
+                    _this.onSucceeded.emit(_this.product);
+                });
             });
         }, function (err) {
             var msg = err.message;
-            if (msg.indexOf('UNIQ_productname') >= 0) {
-                msg = _this.transServ._('Tên đăng nhập đã được sử dụng không thể thực hiện.');
+            if (msg.indexOf('UNIQ_code') >= 0) {
+                msg = _this.transServ._('Mã sản phẩm đã được sử dụng không thể thực hiện.');
             }
             _this._dialogComp.alert(msg);
             _this.onError.emit(err);

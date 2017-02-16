@@ -7,6 +7,7 @@ import { SetupRoutingModule } from './setup-routing.module';
 /* --- Setup */
 import { SetupComponent } from './setup.component/setup.component';
 import { SetupTblUserComponent } from './setup-tbl-user.component/setup-tbl-user.component';
+import { SetupTblProductComponent } from './setup-tbl-product.component/setup-tbl-product.component';
 
 // service(s)
 
@@ -16,6 +17,7 @@ import { SetupTblUserComponent } from './setup-tbl-user.component/setup-tbl-user
   // setup
     SetupComponent,
     SetupTblUserComponent,
+    SetupTblProductComponent
   // #end.setup
   ],
   //bootstrap: [ SetupComponent ],

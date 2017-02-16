@@ -12,23 +12,54 @@ var core_1 = require("@angular/core");
 var translator_service_1 = require("../../core/translator.service");
 var dialog_component_1 = require("../../core/dialog.component/dialog.component");
 var product_repo_service_1 = require("../product-repo.service");
+var phpjs_service_1 = require("../../core/phpjs.service");
+var phpjs = phpjs_service_1.PhpjsService.phpjs();
+var paging_component_1 = require("../../shared/paging.component/paging.component");
+var product_model_1 = require("../product.model");
 var ProductListComponent = (function () {
     function ProductListComponent(transServ, _dialogComp, _productRepoServ) {
         this.transServ = transServ;
         this._dialogComp = _dialogComp;
         this._productRepoServ = _productRepoServ;
+        this.pagingData = {
+            'limit': 10,
+            'skip': null,
+            'totalRows': null,
+        };
         this.onProductSelected = new core_1.EventEmitter();
         this.products = [];
     }
     ProductListComponent.prototype.ngOnInit = function () {
+        this.fetchProductList();
+    };
+    ProductListComponent.prototype.fetchProductList = function () {
         var _this = this;
-        this._productRepoServ.getAllProducts().then(function (products) { return _this.products = products; });
+        var options = {
+            'query': this.pagingData
+        };
+        this._productRepoServ.getAllProducts(options)
+            .then(function (rt) {
+            _this.pagingData.totalRows = rt.total_rows;
+            if (rt && rt.rows) {
+                _this.products = rt.rows.map(function (row) {
+                    return new product_model_1.ProductModel(row.doc);
+                });
+            }
+        });
     };
     ProductListComponent.prototype.selectProduct = function (product) {
         this.onProductSelected.emit(this.selectedProduct = product);
     };
+    ProductListComponent.prototype.onPagerPageChanges = function (page, offset) {
+        this.pagingData.skip = offset;
+        this.fetchProductList();
+    };
     return ProductListComponent;
 }());
+__decorate([
+    core_1.ViewChild('pager'),
+    __metadata("design:type", paging_component_1.PagingComponent)
+], ProductListComponent.prototype, "_pager", void 0);
 __decorate([
     core_1.Output(),
     __metadata("design:type", core_1.EventEmitter)

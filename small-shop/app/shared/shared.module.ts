@@ -7,6 +7,9 @@ import { FormsModule }                from '@angular/forms';
 // pipe(s)
 //import { AwesomePipe }         from './awesome.pipe';
 
+// component(s)
+import { PagingComponent } from './paging.component/paging.component';
+
 @NgModule({
   imports: [
     CommonModule
@@ -14,12 +17,14 @@ import { FormsModule }                from '@angular/forms';
   declarations: [
     //AwesomePipe,
     //HighlightDirective
+    PagingComponent,
   ],
   exports: [
     //AwesomePipe,
     //HighlightDirective,
     CommonModule,
-    FormsModule
+    FormsModule,
+    PagingComponent
   ]
 })
 export class SharedModule { }

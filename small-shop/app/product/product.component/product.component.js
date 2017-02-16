@@ -28,17 +28,11 @@ var ProductComponent = ProductComponent_1 = (function () {
     ProductComponent.prototype.isActionList = function () {
         return this.isAction(ProductComponent_1.ACT_LIST);
     };
-    ProductComponent.prototype.isActionChanges = function () {
-        return !!(this.isAction(ProductComponent_1.ACT_CHANGES) && this.selectedProduct);
-    };
     ProductComponent.prototype.isActionAddNew = function () {
         return this.isAction(ProductComponent_1.ACT_ADD_NEW);
     };
     ProductComponent.prototype.actionList = function () {
         this.action = ProductComponent_1.ACT_LIST;
-    };
-    ProductComponent.prototype.actionChanges = function () {
-        this.action = ProductComponent_1.ACT_CHANGES;
     };
     ProductComponent.prototype.actionAddNew = function () {
         this.action = ProductComponent_1.ACT_ADD_NEW;
@@ -55,7 +49,6 @@ var ProductComponent = ProductComponent_1 = (function () {
     return ProductComponent;
 }());
 ProductComponent.ACT_LIST = 'list';
-ProductComponent.ACT_CHANGES = 'changes';
 ProductComponent.ACT_ADD_NEW = 'add_new';
 ProductComponent = ProductComponent_1 = __decorate([
     core_1.Component({

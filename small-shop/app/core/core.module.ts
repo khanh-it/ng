@@ -59,7 +59,7 @@ export { AppComponent };
     PouchdbDbService,
     AuthCheckService,
     UserRepoService,
-    DialogComponent
+    DialogComponent,
   ]
 })
 export class CoreModule {

@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 
 // Services
 import { PhpjsService } from '../../core/phpjs.service';
@@ -16,6 +20,9 @@ Object.defineProperty(window, 'RxSubject', {value: RxSubject});
   providers: [ ],
 })
 export class TestComponent /*implements OnInit*/ {
+
+  @ViewChild('pager')
+  protected _pager:any;
 
   public oneAtATime:boolean = true;
   public items:string[] = ['Item 1', 'Item 2', 'Item 3'];
@@ -44,5 +51,14 @@ export class TestComponent /*implements OnInit*/ {
     protected _phpjsServ: PhpjsService
   ) {
 
+  }
+
+  ngOnInit() {
+    console.log('this._pager: ', this._pager);
+  }
+
+  public onPagerPageChanges({page, pager}:{page:number, pager:any}) {
+    console.log('page: ', page);
+    console.log('pager: ', pager);
   }
 }

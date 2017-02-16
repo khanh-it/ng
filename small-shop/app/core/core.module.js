@@ -64,7 +64,7 @@ CoreModule = __decorate([
             pouchdb_db_service_1.PouchdbDbService,
             auth_check_service_1.AuthCheckService,
             user_repo_service_1.UserRepoService,
-            dialog_component_1.DialogComponent
+            dialog_component_1.DialogComponent,
         ]
     }),
     __param(0, core_1.Optional()), __param(0, core_1.SkipSelf()),

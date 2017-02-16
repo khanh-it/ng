@@ -15,18 +15,14 @@
         <a href="#" (click)="actionAddNew(); $event.preventDefault();" class="btn btn-default btn-sm">
           <i class="glyphicon glyphicon-plus"></i> {{transServ._('Thêm sản phẩm mới')}}
         </a>
-      </div>
+      </div><br/>
       <app-product-list (onProductSelected)="selectProduct($event); actionChanges()"></app-product-list>
     </div>
     <!-- end#Action: list of products -->
 
     <!-- Action: add new product -->
-    <app-product-cud *ngIf="isActionAddNew()" (onSucceeded)="actionList();" (onCanceled)="actionList();"></app-product-cud>
+    <app-product-cud *ngIf="isActionAddNew()" (onSucceeded)="$event;" (onCanceled)="actionList();"></app-product-cud>
     <!-- end#Action: add new product -->
-
-    <!-- Action: product changes -->
-    <app-product-changes *ngIf="isActionChanges()" [product]="selectedProduct" (onCanceled)="actionList();"></app-product-changes>
-    <!-- end#Action: product changes -->
 
   </div>
   <!-- end#panel-body -->

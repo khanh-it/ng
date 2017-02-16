@@ -29,5 +29,6 @@ import { ProductRepoService } from './product-repo.service';
   ]
 })
 export class ProductModule {
-  constructor () {}
+  constructor () {
+  }
 }

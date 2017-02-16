@@ -1,10 +1,8 @@
 "use strict";
-/** */
+var pouchdb_db_service_1 = require("./db.service/pouchdb-db.service");
 var AbstractRepoService = (function () {
-    //protected _dbA:DbAdapterService;
-    /** */
-    function AbstractRepoService(_dbS) {
-        this._dbS = _dbS;
+    function AbstractRepoService() {
+        this._dbS = new pouchdb_db_service_1.PouchdbDbService();
     }
     return AbstractRepoService;
 }());

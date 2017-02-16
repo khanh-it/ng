@@ -8,29 +8,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-/* module(s) */
-var core_1 = require('@angular/core');
-var router_1 = require('@angular/router');
-/* component(s) */
-/* --- Setup */
-var setup_component_1 = require('./setup.component/setup.component');
-var setup_tbl_user_component_1 = require('./setup-tbl-user.component/setup-tbl-user.component');
+var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
+var setup_component_1 = require("./setup.component/setup.component");
+var setup_tbl_user_component_1 = require("./setup-tbl-user.component/setup-tbl-user.component");
+var setup_tbl_product_component_1 = require("./setup-tbl-product.component/setup-tbl-product.component");
 var routes = [
-    /* setup */
     { path: '', component: setup_component_1.SetupComponent, data: {} },
     { path: 'tbl-user', component: setup_tbl_user_component_1.SetupTblUserComponent, data: {} },
+    { path: 'tbl-product', component: setup_tbl_product_component_1.SetupTblProductComponent, data: {} },
 ];
 var SetupRoutingModule = (function () {
     function SetupRoutingModule() {
     }
-    SetupRoutingModule = __decorate([
-        core_1.NgModule({
-            imports: [router_1.RouterModule.forChild(routes)],
-            exports: [router_1.RouterModule]
-        }), 
-        __metadata('design:paramtypes', [])
-    ], SetupRoutingModule);
     return SetupRoutingModule;
 }());
+SetupRoutingModule = __decorate([
+    core_1.NgModule({
+        imports: [router_1.RouterModule.forChild(routes)],
+        exports: [router_1.RouterModule]
+    }),
+    __metadata("design:paramtypes", [])
+], SetupRoutingModule);
 exports.SetupRoutingModule = SetupRoutingModule;
 //# sourceMappingURL=setup-routing.module.js.map

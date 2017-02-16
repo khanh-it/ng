@@ -1,67 +1,63 @@
 <form *ngIf="!!product" class="col-xs-12 col-sm-push-2 col-sm-8" #formCudNG="ngForm" #formCudEle (ngSubmit)="onFormSubmit(formCudNG, formCudEle)">
-  <!-- product's fullname -->
+  <!-- product's code -->
   <div class="form-group">
-    <label for="fullname">{{transServ._('Họ và tên')}}</label>
+    <label for="code">{{transServ._('Mã sản phẩm')}}</label>
     <div class="input-group shadow-br-3">
       <span class="input-group-addon"></span>
-      <input type="text" class="form-control" required [(ngModel)]="product.fullname" name="product[fullname]" #productFullnameNG="ngModel" placeholder="{{transServ._('Họ và tên')}}">
+      <input type="text" class="form-control" required [(ngModel)]="product.code" name="product[code]" #productCodeNG="ngModel" placeholder="{{transServ._('Mã sản phẩm')}}">
       <span class="input-group-addon">
         <span class="glyphicon glyphicon-asterisk text-danger"></span>
-      </span>
-    </div>
-    <div [hidden]="productFullnameNG.valid || productFullnameNG.pristine"  class="alert alert-xs alert-danger">
-      <small>{{transServ._('Họ và tên là bắt buộc!')}}</small>
-    </div>
-  </div><!-- end#product's fullname -->
-  <!-- product's productname -->
-  <div class="form-group">
-    <label for="productname">{{transServ._('Tên đăng nhập')}}</label>
-    <div class="input-group shadow-br-3">
-      <span class="input-group-addon"></span>
-      <input type="text" class="form-control" required [(ngModel)]="product.productname" name="product[productname]" #productProductnameNG="ngModel" placeholder="{{transServ._('Tên đăng nhập')}}">
-      <span class="input-group-addon">
-        <span class="glyphicon glyphicon-asterisk text-danger"></span>
-      </span>
-    </div>
-    <div [hidden]="productProductnameNG.valid || productProductnameNG.pristine"  class="alert alert-xs alert-danger">
-      <small>{{transServ._('Tên đăng nhập là bắt buộc!')}}</small>
-    </div>
-  </div><!-- end#product's productname -->
-  <!-- product's password -->
-  <div class="form-group">
-    <label for="password">{{transServ._('Mật khẩu')}}</label>
-    <div class="input-group shadow-br-3">
-      <span class="input-group-addon"></span>
-      <input type="password" class="form-control" minlength="6" maxlength="50" (ngModel)="product.password" name="product[password]" #productPasswordNG="ngModel" #productPassword placeholder="{{transServ._('Mật khẩu')}}">
-      <span class="input-group-addon">
-        <label class="control-label">
-          <input type="checkbox" (click)="$event.target.checked ? (productPassword.type = 'text') : (productPassword.type = 'password');" >
-          <small>{{transServ._('Hiển thị?')}}</small>
-        </label>
       </span>
     </div>
     <p>
-      <small>{{transServ._('Chiều dài mật khẩu tối thiểu: %minln%, tối đa: %maxln%.', {'minln': productPassword.minLength, 'maxln': productPassword.maxLength})}}</small>
+      <small>({{transServ._('Mã sản phẩm phải là duy nhất, không được phép trùng')}}).</small>
     </p>
-  </div><!-- end#product's password -->
-  <!-- product's type -->
+    <div [hidden]="productCodeNG.valid || productCodeNG.pristine"  class="alert alert-xs alert-danger">
+      <small>{{transServ._('Mã sản phẩm là bắt buộc!')}}</small>
+    </div>
+    <div [hidden]="!productDuplicatedCode"  class="alert alert-xs alert-danger">
+      <small>{{transServ._('Mã sản phẩm "' + productDuplicatedCode + '" đã tồn tại!')}}</small>
+    </div>
+  </div><!-- end#product's code -->
+  <!-- product's name -->
   <div class="form-group">
-    <label>{{transServ._('Loại sản phẩm')}}</label>
-    <p class="clearfix">
-      <label class="control-label">
-        <input type="radio" class="" [(ngModel)]="product.admin" [value]="0" name="product[admin]" #productTypeNormalNG="ngModel">
-        <small>{{transServ._('Sản phẩm thường')}}</small>
-      </label><br/>
-      <span>&nbsp;&nbsp;&nbsp;{{transServ._('Thông tin về loại sản phẩm thường')}}</span>
-    </p>
-    <p class="clearfix">
-      <label class="control-label">
-        <input type="radio" class="" [(ngModel)]="product.admin" [value]="1" name="product[admin]" #productTypeAdminNG="ngModel">
-        <small>{{transServ._('Sản phẩm quản trị')}}</small>
-      </label><br/>
-      <span>&nbsp;&nbsp;&nbsp;{{transServ._('Thông tin về loại sản phẩm quản trị')}}</span>
-    </p>
-  </div><!-- end#product's type -->
+    <label for="name">{{transServ._('Tên sản phẩm')}}</label>
+    <div class="input-group shadow-br-3">
+      <span class="input-group-addon"></span>
+      <input type="text" class="form-control" required [(ngModel)]="product.name" name="product[name]" #productNameNG="ngModel" placeholder="{{transServ._('Tên sản phẩm')}}">
+      <span class="input-group-addon">
+        <span class="glyphicon glyphicon-asterisk text-danger"></span>
+      </span>
+    </div>
+    <div [hidden]="productNameNG.valid || productNameNG.pristine"  class="alert alert-xs alert-danger">
+      <small>{{transServ._('Tên sản phẩm là bắt buộc!')}}</small>
+    </div>
+  </div><!-- end#product's name -->
+  <!-- product's price -->
+  <div class="form-group">
+    <label for="price">{{transServ._('Đơn giá')}}</label>
+    <div class="input-group shadow-br-3">
+      <span class="input-group-addon"></span>
+      <input type="price" required class="form-control text-right text-numeric numeric-integer" pattern="[0-9]+" [(ngModel)]="product.price" name="product[price]" #productPriceNG="ngModel" #productPrice placeholder="0">
+      <span class="input-group-addon">
+          <b>{{transServ._('đ')}}</b>
+      </span>
+      <span class="input-group-addon">
+        <span class="glyphicon glyphicon-asterisk text-danger"></span>
+      </span>
+    </div>
+    <div [hidden]="productPriceNG.valid || productPriceNG.pristine"  class="alert alert-xs alert-danger">
+      <small>{{transServ._('Giá sản phẩm là bắt buộc, và chỉ được phép nhập giá trị số!')}}</small>
+    </div>
+  </div><!-- end#product's price -->
+  <!-- product's note -->
+  <div class="form-group">
+    <label for="name">{{transServ._('Ghi chú (mô tả) sản phẩm')}}</label>
+    <div class="input-group shadow-br-3">
+      <span class="input-group-addon"></span>
+      <textarea class="form-control text-noresize" [(ngModel)]="product.note" name="product[note]" #productNoteNG="ngModel" placeholder="{{transServ._('Ghi chú (mô tả) sản phẩm')}}" rows="4"></textarea>
+    </div>
+  </div><!-- end#product's note -->
   <div class="form-group text-right">
     <button class="btn btn-sm btn-default">
       <i class="glyphicon glyphicon-floppy-disk"></i> {{transServ._('Lưu')}}

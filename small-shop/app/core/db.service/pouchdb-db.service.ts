@@ -15,6 +15,13 @@
 import { Injectable, Inject, OnInit } from '@angular/core';
 
 //
+export interface PDBQueryResponse {
+  "total_rows": number,
+  "offset": number,
+  "rows": any[]
+};
+
+//
 import { AbstractDbService } from './abstract-db.service';
 
 @Injectable()

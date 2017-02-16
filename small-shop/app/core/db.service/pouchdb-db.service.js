@@ -10,20 +10,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 var pouchdb = require("../../../node_modules/pouchdb/dist/pouchdb.js");
 var PouchDB = pouchdb.PouchDB;
 ;
 var pouchdbAdaper = require("../../../node_modules/pouchdb/dist/pouchdb.memory.js");
 var _dontUse_01 = pouchdbAdaper.PouchDB;
 var core_1 = require("@angular/core");
+;
 var abstract_db_service_1 = require("./abstract-db.service");
 var PouchdbDbService = PouchdbDbService_1 = (function (_super) {
     __extends(PouchdbDbService, _super);
     function PouchdbDbService() {
-        return _super.apply(this, arguments) || this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     PouchdbDbService.prototype.init = function (options) {
         var config = PouchdbDbService_1.getDefaultConfig();
@@ -88,8 +86,7 @@ var PouchdbDbService = PouchdbDbService_1 = (function (_super) {
     return PouchdbDbService;
 }(abstract_db_service_1.AbstractDbService));
 PouchdbDbService = PouchdbDbService_1 = __decorate([
-    core_1.Injectable(),
-    __metadata("design:paramtypes", [])
+    core_1.Injectable()
 ], PouchdbDbService);
 exports.PouchdbDbService = PouchdbDbService;
 var PouchdbDbService_1;

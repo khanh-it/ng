@@ -30,7 +30,7 @@ export class ProductComponent implements OnInit {
     protected _productRepoServ: ProductRepoService,
     protected _sanitizer: DomSanitizer
   ) {}
-  
+
   public selectedProduct:ProductModel;
 
   public products:ProductModel[] = [];
@@ -38,8 +38,6 @@ export class ProductComponent implements OnInit {
   public action:string = ProductComponent.ACT_LIST;
 
   public static readonly ACT_LIST = 'list';
-
-  public static readonly ACT_CHANGES = 'changes';
 
   public static readonly ACT_ADD_NEW = 'add_new';
 
@@ -49,18 +47,12 @@ export class ProductComponent implements OnInit {
   public isActionList():boolean {
     return this.isAction(ProductComponent.ACT_LIST);
   }
-  public isActionChanges():boolean {
-    return !!(this.isAction(ProductComponent.ACT_CHANGES) && this.selectedProduct);
-  }
   public isActionAddNew():boolean {
     return this.isAction(ProductComponent.ACT_ADD_NEW);
   }
 
   public actionList():void {
     this.action = ProductComponent.ACT_LIST;
-  }
-  public actionChanges():void {
-    this.action = ProductComponent.ACT_CHANGES;
   }
   public actionAddNew():void {
     this.action = ProductComponent.ACT_ADD_NEW;
